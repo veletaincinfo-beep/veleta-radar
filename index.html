@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELETA 閉店予測レーダー v3</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07090b; --sur:#0d1014; --sur2:#131820;
+  --bdr:#1a2028; --bdr2:#222c38;
+  --amber:#e8a020; --amber-d:rgba(232,160,32,.12);
+  --teal:#2dd4bf; --teal-d:rgba(45,212,191,.1);
+  --danger:#f43f5e; --danger-d:rgba(244,63,94,.12);
+  --warn:#fb923c; --ok:#4ade80; --ok-d:rgba(74,222,128,.08);
+  --indigo:#818cf8; --indigo-d:rgba(129,140,248,.12);
+  --txt:#b8c4ce; --txt2:#6a7a8a; --txt3:#344050;
+  --mono:'IBM Plex Mono',monospace; --sans:'Noto Sans JP',sans-serif;
+  --r:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:13px;min-height:100vh;
+  background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px}
+
+.screen{display:none!important}
+#s-setup.on{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px}
+#s-scan.on{display:flex!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;text-align:center}
+#s-res.on{display:block!important}
+
+/* SETUP */
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--amber);text-transform:uppercase;margin-bottom:10px}
+.title{font-family:var(--mono);font-size:26px;font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:6px}
+.title em{color:var(--amber);font-style:normal}
+.badge{font-family:var(--mono);font-size:10px;background:var(--indigo-d);color:var(--indigo);border:1px solid rgba(129,140,248,.25);border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.sub{font-size:12px;color:var(--txt2);margin-bottom:32px}
+.card{width:100%;max-width:660px;background:var(--sur);border:1px solid var(--bdr2);border-radius:14px;padding:32px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,160,32,.04),transparent 60%);pointer-events:none}
+.card::after{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent)}
+.fl{margin-bottom:22px}
+.fl-lbl{display:block;font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--txt2);margin-bottom:7px}
+.fl-inp{width:100%;background:var(--sur2);border:1px solid var(--bdr2);border-radius:var(--r);padding:11px 14px;color:var(--txt);font-family:var(--mono);font-size:12px;outline:none;transition:border-color .2s,box-shadow .2s}
+.fl-inp:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-d)}
+.fl-hint{font-size:11px;color:var(--txt3);margin-top:5px;line-height:1.6}
+.fl-hint a{color:var(--amber);text-decoration:none}
+.areas{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+@media(max-width:480px){.areas{grid-template-columns:repeat(2,1fr)}}
+.chip{display:flex;align-items:center;gap:7px;padding:7px 10px;background:var(--sur2);border:1px solid var(--bdr);border-radius:6px;cursor:pointer;font-size:12px;transition:all .15s;user-select:none}
+.chip.on{border-color:var(--amber);background:var(--amber-d);color:var(--amber)}
+.chip input{display:none}
+.cdot{width:6px;height:6px;border-radius:50%;background:var(--bdr2);flex-shrink:0;transition:background .15s}
+.chip.on .cdot{background:var(--amber);box-shadow:0 0 5px var(--amber)}
+.tog-row{display:flex;gap:12px;margin-top:7px}
+.ghost{font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--txt3);background:none;border:none;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.ghost:hover{color:var(--txt2)}
+.kt-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r);border:1px solid rgba(129,140,248,.2);background:rgba(129,140,248,.06);margin-bottom:22px}
+.kt-main{font-size:13px;font-weight:500}
+.kt-sub{font-size:11px;color:var(--txt3);margin-top:2px}
+.cost{display:flex;align-items:flex-start;gap:10px;background:rgba(232,160,32,.05);border:1px solid rgba(232,160,32,.15);border-radius:var(--r);padding:11px 13px;margin:18px 0;font-size:11px;line-height:1.6;color:var(--txt2)}
+.big-btn{width:100%;padding:15px;background:var(--amber);color:#000;border:none;border-radius:var(--r);font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.big-btn:hover{background:#f0b030;transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,160,32,.25)}
+.big-btn:active{transform:translateY(0)}
+
+/* SCAN */
+.rring{width:80px;height:80px;border-radius:50%;border:2px solid var(--bdr2);position:relative;margin-bottom:28px}
+.rring::before,.rring::after{content:'';position:absolute;border-radius:50%;border:2px solid var(--amber)}
+.rring::before{inset:8px;opacity:.5;animation:rp 2s ease-in-out infinite}
+.rring::after{inset:20px;animation:rp 2s ease-in-out infinite .6s}
+.rdot{position:absolute;inset:36px;background:var(--amber);border-radius:50%;box-shadow:0 0 12px var(--amber);animation:rp 1.4s ease-in-out infinite}
+@keyframes rp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.85)}}
+.scan-h{font-family:var(--mono);font-size:18px;font-weight:700;color:#fff;margin-bottom:6px}
+.scan-s{font-size:12px;color:var(--txt2);margin-bottom:28px;min-height:18px;font-family:var(--mono)}
+.prog-w{width:100%;max-width:440px;margin-bottom:32px}
+.prog-t{height:3px;background:var(--bdr2);border-radius:2px;overflow:hidden}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--amber),#fbbf24);border-radius:2px;width:0%;transition:width .5s ease;box-shadow:0 0 8px rgba(232,160,32,.5)}
+.prog-m{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--txt3);margin-top:7px}
+.cnt{font-family:var(--mono);font-size:42px;font-weight:700;color:var(--amber);line-height:1}
+.cnt-l{font-size:11px;color:var(--txt3);letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+
+/* RESULTS */
+.topbar{background:var(--sur);border-bottom:1px solid var(--bdr);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.logo{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--amber);letter-spacing:2px}
+.logo span{color:var(--txt3);font-weight:400}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.rbtn{padding:7px 13px;border-radius:6px;font-family:var(--mono);font-size:10px;letter-spacing:1px;cursor:pointer;border:1px solid var(--bdr2);transition:all .15s}
+.rbtn-g{background:transparent;color:var(--txt2)}.rbtn-g:hover{border-color:var(--txt2);color:var(--txt)}
+.rbtn-a{background:var(--amber-d);color:var(--amber);border-color:rgba(232,160,32,.3)}.rbtn-a:hover{background:var(--amber);color:#000}
+.rbtn-i{background:var(--indigo-d);color:var(--indigo);border-color:rgba(129,140,248,.3)}.rbtn-i:hover{background:var(--indigo);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bdr);border-bottom:1px solid var(--bdr);gap:1px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+.sc{background:var(--sur);padding:15px 18px}
+.sv{font-family:var(--mono);font-size:24px;font-weight:700;margin-bottom:2px;color:var(--txt)}
+.sl{font-size:10px;color:var(--txt3);letter-spacing:1px;text-transform:uppercase}
+.cd .sv{color:var(--danger)}.cw .sv{color:var(--warn)}.co .sv{color:var(--ok)}
+.frow{background:var(--sur);border-bottom:1px solid var(--bdr);padding:11px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ftabs{display:flex;gap:3px}
+.ft{padding:5px 12px;border-radius:5px;font-family:var(--mono);font-size:10px;cursor:pointer;background:transparent;border:1px solid transparent;color:var(--txt3);transition:all .15s}
+.ft:hover:not(.on){color:var(--txt2);border-color:var(--bdr2)}
+.ft.on{background:var(--amber-d);border-color:rgba(232,160,32,.35);color:var(--amber)}
+.fsearch{background:var(--sur2);border:1px solid var(--bdr2);border-radius:6px;padding:6px 11px;color:var(--txt);font-family:var(--sans);font-size:12px;outline:none;width:170px}
+.fsearch:focus{border-color:var(--amber)}
+.fsort{background:var(--sur2);border:1px solid var(--bdr2);border-radius:6px;padding:6px 11px;color:var(--txt2);font-family:var(--mono);font-size:10px;outline:none;cursor:pointer;margin-left:auto}
+.meta{font-family:var(--mono);font-size:10px;color:var(--txt3);padding:7px 22px;border-bottom:1px solid var(--bdr);background:var(--bg)}
+#bulk-bar{display:none;position:sticky;top:52px;z-index:190;background:var(--indigo-d);border-bottom:1px solid rgba(129,140,248,.25);padding:10px 22px;align-items:center;gap:12px;flex-wrap:wrap;backdrop-filter:blur(12px)}
+#bulk-bar.on{display:flex}
+.blbl{font-family:var(--mono);font-size:11px;color:var(--indigo)}
+.bsend{padding:7px 16px;background:var(--indigo);color:#fff;border:none;border-radius:6px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer}
+.bsend:hover{background:#6366f1}.bsend:disabled{background:var(--bdr2);color:var(--txt3);cursor:not-allowed}
+.bclr{padding:7px 12px;background:transparent;color:var(--txt2);border:1px solid var(--bdr2);border-radius:6px;font-family:var(--mono);font-size:10px;cursor:pointer}
+.tbl-w{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--sur2)}
+th{padding:9px 12px;text-align:left;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);border-bottom:1px solid var(--bdr);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--bdr);transition:background .1s}
+tbody tr:hover{background:var(--sur2)}
+tbody tr.done{opacity:.35}
+tbody tr.sel{background:rgba(129,140,248,.05)!important}
+td{padding:10px 12px;vertical-align:middle}
+.rn{font-family:var(--mono);font-size:11px;color:var(--txt3)}
+.pname{font-weight:500;font-size:13px;color:#e2e8ef;margin-bottom:2px}
+.paddr{font-size:11px;color:var(--txt3)}
+.atag{display:inline-block;padding:2px 7px;background:var(--teal-d);border:1px solid rgba(45,212,191,.18);border-radius:4px;font-size:10px;color:var(--teal);font-family:var(--mono);white-space:nowrap}
+.sw{min-width:90px}
+.st{height:5px;background:var(--bdr2);border-radius:3px;overflow:hidden;margin-bottom:3px}
+.sf{height:100%;border-radius:3px}
+.sn{font-family:var(--mono);font-size:13px;font-weight:700}
+.tbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:700;white-space:nowrap}
+.rnum{font-family:var(--mono);font-size:13px}
+.rcnt{font-size:10px;color:var(--txt3);margin-top:1px}
+.stag{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:3px}
+.tpill{display:inline-flex;align-items:center;gap:2px;font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:middle}
+.pd{background:var(--danger-d);color:var(--danger)}.pu{background:var(--ok-d);color:var(--ok)}
+.abtn{padding:4px 8px;border-radius:4px;font-family:var(--mono);font-size:10px;cursor:pointer;border:1px solid var(--bdr2);background:transparent;color:var(--txt3);margin-right:3px;transition:all .15s;white-space:nowrap}
+.abtn:hover{color:var(--txt);border-color:var(--txt3)}
+.abtn.done{background:var(--ok-d);border-color:rgba(74,222,128,.3);color:var(--ok)}
+.kts{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;padding:3px 7px;border-radius:4px;white-space:nowrap}
+.kts.unreg{background:transparent;border:1px solid var(--bdr2);color:var(--txt3)}
+.kts.reged{background:var(--indigo-d);border:1px solid rgba(129,140,248,.3);color:var(--indigo)}
+.kts.err{background:var(--danger-d);border:1px solid rgba(244,63,94,.3);color:var(--danger)}
+.empty{text-align:center;padding:80px 20px;color:var(--txt3);font-family:var(--mono);font-size:13px}
+.empty .ei{font-size:40px;margin-bottom:14px}
+#toast-w{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{padding:12px 18px;border-radius:var(--r);font-family:var(--mono);font-size:12px;animation:ti .3s ease;pointer-events:auto;max-width:340px;line-height:1.5}
+.tok{background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.3);color:var(--ok)}
+.terr{background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.3);color:var(--danger)}
+.tinf{background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.3);color:var(--indigo)}
+@keyframes ti{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- SETUP -->
+<div id="s-setup" class="screen on">
+  <div style="text-align:center;margin-bottom:32px">
+    <div class="eyebrow">VELETA INTELLIGENCE SYSTEM</div>
+    <h1 class="title">閉店予測<em>レーダー</em><span class="badge">v3.0</span></h1>
+    <p class="sub">Google Places API × 名古屋エリア飲食店 閉店リスクスコアリング + kintone連携</p>
+  </div>
+  <div class="card">
+    <div class="fl">
+      <label class="fl-lbl" for="api-key">GOOGLE PLACES API KEY</label>
+      <input type="password" id="api-key" class="fl-inp" placeholder="AIza..." autocomplete="off">
+      <p class="fl-hint">Google Cloud Console → <strong>Places API (New)</strong> を有効化してください。<br>
+        <a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a></p>
+    </div>
+    <div class="fl">
+      <label class="fl-lbl">スキャン対象エリア（名古屋市内）</label>
+      <div class="areas" id="areas-grid"></div>
+      <div class="tog-row">
+        <button class="ghost" onclick="selAll()">すべて選択</button>
+        <button class="ghost" onclick="selNone()">すべて解除</button>
+      </div>
+    </div>
+    <div id="kt-row" class="kt-row">
+      <div style="font-size:18px" id="kt-icon">⏳</div>
+      <div>
+        <div class="kt-main" id="kt-main" style="color:var(--indigo)">kintone 接続確認中...</div>
+        <div class="kt-sub" id="kt-sub">Netlify 環境変数を確認しています</div>
+      </div>
+    </div>
+    <div class="cost">
+      <span style="font-size:13px;flex-shrink:0">💡</span>
+      <span>Places API (New) <strong style="color:var(--amber)">$0.032/コール</strong> × 9点格子 × 40駅 = 360コール ≒ <strong style="color:var(--amber)">$11.5/回（約¥1,700）</strong>。名古屋4路線40駅をカバーします。2回目以降は評価降下・口コミ停滞の差分も検出します。</span>
+    </div>
+    <button class="big-btn" onclick="startScan()">▶ スキャン開始</button>
+  </div>
+</div>
+
+<!-- SCANNING -->
+<div id="s-scan" class="screen">
+  <div class="rring"><div class="rdot"></div></div>
+  <div class="scan-h">SCANNING NAGOYA...</div>
+  <div class="scan-s" id="scan-s">初期化中...</div>
+  <div class="prog-w">
+    <div class="prog-t"><div class="prog-f" id="prog-f"></div></div>
+    <div class="prog-m"><span id="prog-a">エリア 0 / 0</span><span id="prog-p">0%</span></div>
+  </div>
+  <div class="cnt" id="cnt">0</div>
+  <div class="cnt-l">店舗収集済</div>
+</div>
+
+<!-- RESULTS -->
+<div id="s-res" class="screen">
+  <div class="topbar">
+    <div class="logo">VELETA RADAR <span>/ 閉店予測</span></div>
+    <div class="acts">
+      <button class="rbtn rbtn-g" onclick="exportCSV()">⬇ CSV</button>
+      <button class="rbtn rbtn-g" onclick="show('s-setup')">↺ 再スキャン</button>
+      <button class="rbtn rbtn-a" onclick="clearCtd()">アプローチ済リセット</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="sc"><div class="sv" id="s-tot">—</div><div class="sl">スキャン店舗数</div></div>
+    <div class="sc cd"><div class="sv" id="s-hi">—</div><div class="sl">🔴 高リスク</div></div>
+    <div class="sc cw"><div class="sv" id="s-mi">—</div><div class="sl">🟠 中リスク</div></div>
+    <div class="sc co"><div class="sv" id="s-wa">—</div><div class="sl">🟡 要観察</div></div>
+  </div>
+  <div class="meta" id="meta"></div>
+  <div id="bulk-bar">
+    <span class="blbl" id="blbl">0件選択中</span>
+    <button class="bsend" id="bsend" onclick="bulkReg()">kintoneに一括登録</button>
+    <button class="bclr" onclick="clearSel()">選択解除</button>
+  </div>
+  <div class="frow">
+    <div class="ftabs">
+      <button class="ft on" data-f="all" onclick="setF('all')">ALL</button>
+      <button class="ft" data-f="high" onclick="setF('high')">高リスク</button>
+      <button class="ft" data-f="mid" onclick="setF('mid')">中リスク</button>
+      <button class="ft" data-f="watch" onclick="setF('watch')">要観察</button>
+      <button class="ft" data-f="safe" onclick="setF('safe')">安定</button>
+    </div>
+    <input class="fsearch" id="fsearch" placeholder="店舗名で絞込..." oninput="renderTbl()">
+    <select class="fsort" id="fsort" onchange="renderTbl()">
+      <option value="score">スコア順</option>
+      <option value="rating_asc">評価 低い順</option>
+      <option value="rev_asc">口コミ 少ない順</option>
+      <option value="area">エリア順</option>
+    </select>
+  </div>
+  <div class="tbl-w">
+    <table>
+      <thead><tr>
+        <th><input type="checkbox" id="cb-all" onclick="toggleAll(this)"></th>
+        <th>#</th><th>店舗名 / 住所</th><th>エリア</th>
+        <th>リスクスコア</th><th>ランク</th><th>評価</th>
+        <th>口コミ</th><th>ステータス</th><th>kintone</th><th>アクション</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none"><div class="ei">🔍</div>該当する店舗がありません</div>
+  </div>
+</div>
+
+<div id="toast-w"></div>
+
+<script>
+// ── AREAS ──────────────────────────────────
+const AREAS=[
+  // ── 東山線 ──────────────────────────
+  {name:'高畑',        lat:35.1628, lng:136.8490, r:450},
+  {name:'名古屋駅',   lat:35.1709, lng:136.8815, r:550},
+  {name:'伏見',        lat:35.1673, lng:136.8956, r:450},
+  {name:'栄',          lat:35.1698, lng:136.9068, r:500},
+  {name:'新栄町',      lat:35.1686, lng:136.9163, r:400},
+  {name:'千種',        lat:35.1745, lng:136.9308, r:450},
+  {name:'今池',        lat:35.1628, lng:136.9261, r:450},
+  {name:'池下',        lat:35.1628, lng:136.9372, r:400},
+  {name:'覚王山',      lat:35.1693, lng:136.9462, r:450},
+  {name:'本山',        lat:35.1669, lng:136.9503, r:400},
+  {name:'東山公園',    lat:35.1604, lng:136.9623, r:400},
+  {name:'星ヶ丘',      lat:35.1604, lng:136.9748, r:450},
+  {name:'一社',        lat:35.1638, lng:136.9895, r:400},
+  {name:'上社',        lat:35.1638, lng:137.0015, r:400},
+  {name:'本郷',        lat:35.1686, lng:137.0165, r:400},
+  {name:'藤が丘',      lat:35.1656, lng:137.0441, r:450},
+  // ── 鶴舞線 ──────────────────────────
+  {name:'浄心',        lat:35.1876, lng:136.9008, r:400},
+  {name:'丸の内',      lat:35.1726, lng:136.8990, r:400},
+  {name:'大須観音',    lat:35.1573, lng:136.9003, r:450},
+  {name:'上前津',      lat:35.1565, lng:136.9068, r:400},
+  {name:'鶴舞',        lat:35.1500, lng:136.9100, r:450},
+  {name:'御器所',      lat:35.1393, lng:136.9128, r:400},
+  {name:'いりなか',    lat:35.1310, lng:136.9372, r:400},
+  {name:'八事',        lat:35.1274, lng:136.9629, r:450},
+  {name:'塩釜口',      lat:35.1186, lng:136.9629, r:400},
+  {name:'平針',        lat:35.0983, lng:136.9748, r:450},
+  // ── 名城線 ──────────────────────────
+  {name:'久屋大通',    lat:35.1726, lng:136.9090, r:400},
+  {name:'矢場町',      lat:35.1626, lng:136.9083, r:420},
+  {name:'金山',        lat:35.1422, lng:136.9100, r:500},
+  {name:'熱田神宮西',  lat:35.1233, lng:136.9069, r:450},
+  {name:'堀田',        lat:35.1186, lng:136.9129, r:400},
+  {name:'新瑞橋',      lat:35.1186, lng:136.9248, r:400},
+  {name:'大曽根',      lat:35.1840, lng:136.9248, r:450},
+  {name:'黒川',        lat:35.2000, lng:136.9100, r:450},
+  // ── 桜通線 ──────────────────────────
+  {name:'国際センター', lat:35.1700, lng:136.8899, r:400},
+  {name:'高岳',        lat:35.1726, lng:136.9170, r:400},
+  {name:'車道',        lat:35.1726, lng:136.9308, r:400},
+  {name:'桜山',        lat:35.1393, lng:136.9248, r:400},
+  {name:'野並',        lat:35.0876, lng:136.9568, r:450},
+  {name:'徳重',        lat:35.0620, lng:136.9748, r:450},
+];
+
+// ── STATE ──────────────────────────────────
+const G={
+  results:[],
+  sel:new Set(AREAS.map(a=>a.name)),
+  checked:new Set(),
+  filter:'all',
+  ktOk:false,
+  apiKey:'',
+};
+
+// ── BOOT ───────────────────────────────────
+function boot(){
+  buildChips();
+  ktHealthCheck();
+}
+
+function buildChips(){
+  const g=document.getElementById('areas-grid');
+  g.innerHTML='';
+  AREAS.forEach(a=>{
+    const lbl=document.createElement('label');
+    lbl.className='chip on';
+    lbl.innerHTML=`<input type="checkbox" checked value="${a.name}"><span class="cdot"></span>${a.name}`;
+    const cb=lbl.querySelector('input');
+    cb.addEventListener('change',()=>{
+      if(cb.checked){G.sel.add(a.name);lbl.classList.add('on');}
+      else{G.sel.delete(a.name);lbl.classList.remove('on');}
+    });
+    g.appendChild(lbl);
+  });
+}
+
+function selAll(){document.querySelectorAll('#areas-grid input').forEach(c=>{c.checked=true;c.dispatchEvent(new Event('change'))});}
+function selNone(){document.querySelectorAll('#areas-grid input').forEach(c=>{c.checked=false;c.dispatchEvent(new Event('change'))});}
+
+// ── kintone HEALTH CHECK ───────────────────
+async function ktHealthCheck(){
+  try{
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),5000);
+    let res;
+    try{res=await fetch('/api/kintone',{method:'GET',signal:ctrl.signal});}
+    finally{clearTimeout(t);}
+    if(res.status===405||res.status===200){
+      setKtUI('🟢','kintone 連携: 準備完了','#4ade80','Netlify 環境変数が設定されています');
+      G.ktOk=true;
+    }else if(res.status===500){
+      setKtUI('⚠️','kintone 環境変数が未設定','#eab308','Netlify ダッシュボードで設定してください');
+    }else{
+      setKtUI('⚪','kintone 未接続（Function未デプロイ）','#6a7a8a','Netlify にデプロイ後に有効になります');
+    }
+  }catch{
+    setKtUI('⚪','kintone 未接続','#6a7a8a','Netlify にデプロイするとkintone連携が有効になります');
+  }
+}
+
+function setKtUI(icon,main,color,sub){
+  document.getElementById('kt-icon').textContent=icon;
+  const m=document.getElementById('kt-main');
+  m.textContent=main;m.style.color=color;
+  document.getElementById('kt-sub').textContent=sub;
+}
+
+// ── GRID ───────────────────────────────────
+// 各エリアを3×3格子（9点）に展開して網羅率を上げる
+function gridPoints(area){
+  const pts=[];
+  // 1度 = 約111km（緯度）、約91km（経度 @ 名古屋）
+  const latStep=(area.r*0.65)/111000;
+  const lngStep=(area.r*0.65)/91000;
+  const subR=Math.round(area.r*0.55);
+  for(let dy=-1;dy<=1;dy++){
+    for(let dx=-1;dx<=1;dx++){
+      pts.push({name:area.name,lat:area.lat+dy*latStep,lng:area.lng+dx*lngStep,r:subR});
+    }
+  }
+  return pts;
+}
+
+// ── SCAN ───────────────────────────────────
+async function startScan(){
+  const key=document.getElementById('api-key').value.trim();
+  if(!key){alert('Google Places APIキーを入力してください');return;}
+  if(G.sel.size===0){alert('エリアを1つ以上選択してください');return;}
+  G.apiKey=key;
+
+  show('s-scan');
+  setSS('接続確認中...');
+
+  // 疎通確認
+  try{
+    const test=await placesSearch(AREAS[0],key,1);
+    if(test===null)throw new Error('APIエラー');
+  }catch(e){
+    alert('エラー: '+e.message+'\n\n確認事項:\n・Places API (New) が有効か\n・APIキーの制限設定');
+    show('s-setup');return;
+  }
+
+  const areas=AREAS.filter(a=>G.sel.has(a.name));
+  // 各エリアを9点格子に展開
+  const pts=areas.flatMap(a=>gridPoints(a));
+  const base=loadBase();
+  const map=new Map();
+
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i];
+    setSS(`スキャン中: ${a.name} (${i+1}/${pts.length}コール)`);
+    setProg(Math.round(i/pts.length*100),i,pts.length);
+    const places=await placesSearch(a,key,20);
+    if(places){
+      places.forEach(p=>{
+        if(!map.has(p.id)){
+          map.set(p.id,score(p,base[p.id],a.name));
+          document.getElementById('cnt').textContent=map.size;
+        }
+      });
+    }
+    if(i<pts.length-1)await sleep(300);
+  }
+
+  setProg(100,areas.length,areas.length);
+  setSS('完了 — 集計中...');
+  await sleep(400);
+
+  G.results=[...map.values()].sort((a,b)=>b.sc-a.sc);
+  G.checked=new Set();
+  saveBase(G.results);
+  renderRes();
+  show('s-res');
+}
+
+// ── PLACES API (New) REST ──────────────────
+async function placesSearch(area,key,max){
+  const FM='places.id,places.displayName,places.formattedAddress,places.rating,places.userRatingCount,places.businessStatus,places.priceLevel';
+  try{
+    const res=await fetch('https://places.googleapis.com/v1/places:searchNearby',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'X-Goog-Api-Key':key,
+        'X-Goog-FieldMask':FM,
+      },
+      body:JSON.stringify({
+        includedTypes:['restaurant'],
+        maxResultCount:max||20,
+        locationRestriction:{circle:{center:{latitude:area.lat,longitude:area.lng},radius:area.r}},
+        languageCode:'ja',
+      }),
+    });
+    if(!res.ok){
+      const e=await res.json().catch(()=>({}));
+      throw new Error(e?.error?.message||`HTTP ${res.status}`);
+    }
+    const d=await res.json();
+    const PM={PRICE_LEVEL_FREE:0,PRICE_LEVEL_INEXPENSIVE:1,PRICE_LEVEL_MODERATE:2,PRICE_LEVEL_EXPENSIVE:3,PRICE_LEVEL_VERY_EXPENSIVE:4};
+    return(d.places||[]).map(p=>({
+      id:p.id,
+      name:(typeof p.displayName==='object'?p.displayName.text:p.displayName)||'',
+      addr:p.formattedAddress||'',
+      rating:p.rating??null,
+      reviews:p.userRatingCount??0,
+      status:p.businessStatus||'OPERATIONAL',
+      price:PM[p.priceLevel]??null,
+    }));
+  }catch(e){
+    console.error('placesSearch',area.name,e.message);
+    return null;
+  }
+}
+
+// ── SCORING ────────────────────────────────
+function score(p,base,area){
+  let s=0;
+  if(p.rating!=null){
+    if(p.rating<3.0)s+=30;
+    else if(p.rating<3.3)s+=20;
+    else if(p.rating<3.6)s+=10;
+    else if(p.rating<3.9)s+=4;
+  }else s+=14;
+  const rc=p.reviews||0;
+  if(rc===0)s+=25;else if(rc<10)s+=18;else if(rc<30)s+=10;else if(rc<70)s+=4;
+  if(p.status==='CLOSED_PERMANENTLY')s+=40;
+  else if(p.status==='CLOSED_TEMPORARILY')s+=28;
+  if(p.price===1)s+=8;else if(p.price==null)s+=3;
+  if(base){
+    const drop=(base.rating||3.5)-(p.rating||3.5);
+    if(drop>0.3)s+=25;else if(drop>0.1)s+=12;
+    const days=Math.max(1,(Date.now()-new Date(base.sd))/86400000);
+    if(days>20&&rc-(base.rc||0)<days/30*1.5)s+=7;
+  }
+  const sl={OPERATIONAL:'営業中',CLOSED_TEMPORARILY:'一時休業',CLOSED_PERMANENTLY:'閉店'};
+  return{id:p.id,name:p.name,addr:p.addr,area,rating:p.rating,reviews:rc,
+    status:p.status,statusL:sl[p.status]||'営業中',price:p.price,
+    sc:Math.min(Math.round(s),100),base:base||null,sd:new Date().toISOString()};
+}
+
+function tier(sc){
+  if(sc>=68)return{l:'高リスク',c:'#f43f5e',bg:'rgba(244,63,94,.1)',i:'🔴',k:'high'};
+  if(sc>=44)return{l:'中リスク',c:'#fb923c',bg:'rgba(251,146,60,.1)',i:'🟠',k:'mid'};
+  if(sc>=24)return{l:'要観察',c:'#eab308',bg:'rgba(234,179,8,.1)',i:'🟡',k:'watch'};
+  return{l:'安定',c:'#4ade80',bg:'rgba(74,222,128,.08)',i:'🟢',k:'safe'};
+}
+
+// ── RENDER ─────────────────────────────────
+function renderRes(){
+  const r=G.results;
+  document.getElementById('s-tot').textContent=r.length;
+  document.getElementById('s-hi').textContent=r.filter(x=>tier(x.sc).k==='high').length;
+  document.getElementById('s-mi').textContent=r.filter(x=>tier(x.sc).k==='mid').length;
+  document.getElementById('s-wa').textContent=r.filter(x=>tier(x.sc).k==='watch').length;
+  const d=new Date().toLocaleString('ja-JP',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('meta').textContent=`スキャン日時: ${d}  |  ${r.length}店舗`;
+  renderTbl();
+}
+
+function renderTbl(){
+  const f=G.filter,q=document.getElementById('fsearch').value.toLowerCase();
+  const srt=document.getElementById('fsort').value;
+  const ctd=loadCtd(),reged=loadReged();
+  let rows=[...G.results];
+  if(f!=='all')rows=rows.filter(x=>tier(x.sc).k===f);
+  if(q)rows=rows.filter(x=>x.name.toLowerCase().includes(q)||x.addr.toLowerCase().includes(q));
+  if(srt==='score')rows.sort((a,b)=>b.sc-a.sc);
+  else if(srt==='rating_asc')rows.sort((a,b)=>(a.rating||0)-(b.rating||0));
+  else if(srt==='rev_asc')rows.sort((a,b)=>a.reviews-b.reviews);
+  else if(srt==='area')rows.sort((a,b)=>a.area.localeCompare(b.area));
+  const tb=document.getElementById('tbody'),em=document.getElementById('empty');
+  if(!rows.length){tb.innerHTML='';em.style.display='block';return;}
+  em.style.display='none';
+  tb.innerHTML=rows.map((x,i)=>{
+    const t=tier(x.sc),isC=ctd.has(x.id),isK=reged[x.id],isCh=G.checked.has(x.id);
+    const url=`https://www.google.com/maps/place/?q=place_id:${x.id}`;
+    const rH=x.rating!=null
+      ?`<div class="rnum" style="color:${x.rating<3.5?'#f43f5e':x.rating<3.8?'#fb923c':'#b8c4ce'}">${x.rating.toFixed(1)}</div><div class="rcnt">${x.reviews}件</div>`
+      :`<div class="rnum" style="color:var(--txt3)">—</div>`;
+    const sH={OPERATIONAL:`<span class="stag" style="background:rgba(74,222,128,.08);color:#4ade80">営業中</span>`,
+      CLOSED_TEMPORARILY:`<span class="stag" style="background:rgba(251,146,60,.1);color:#fb923c">一時休業</span>`,
+      CLOSED_PERMANENTLY:`<span class="stag" style="background:rgba(244,63,94,.1);color:#f43f5e">閉店</span>`}[x.status]||'';
+    let tp='';
+    if(x.base&&x.rating!=null){const d=(x.base.rating||0)-x.rating;if(d>0.05)tp=`<span class="tpill pd">▼${d.toFixed(1)}</span>`;else if(d<-0.05)tp=`<span class="tpill pu">▲${Math.abs(d).toFixed(1)}</span>`;}
+    let kH=G.ktOk
+      ?(isK==='ok'?`<span class="kts reged">✓ 登録済</span>`
+        :isK==='err'?`<span class="kts err">✗ エラー</span><button class="abtn" onclick="regOne('${x.id}')">再送</button>`
+        :`<span class="kts unreg" id="kts-${x.id}">○ 未登録</span><button class="abtn" onclick="regOne('${x.id}')">登録</button>`)
+      :`<span class="kts unreg">—</span>`;
+    return`<tr class="${isC?'done':''} ${isCh?'sel':''}" data-id="${x.id}">
+      <td style="text-align:center"><input type="checkbox" ${isCh?'checked':''} ${G.ktOk?'':'disabled'} onchange="toggleCk('${x.id}',this.checked)"></td>
+      <td class="rn">${i+1}</td>
+      <td><div class="pname">${esc(x.name)}${tp}</div><div class="paddr">${esc(x.addr)}</div></td>
+      <td><span class="atag">${x.area}</span></td>
+      <td><div class="sw"><div class="st"><div class="sf" style="width:${x.sc}%;background:${t.c}"></div></div><div class="sn" style="color:${t.c}">${x.sc}</div></div></td>
+      <td><span class="tbadge" style="background:${t.bg};color:${t.c}">${t.i} ${t.l}</span></td>
+      <td>${rH}</td>
+      <td><div class="rnum">${x.reviews}</div></td>
+      <td>${sH}</td>
+      <td style="white-space:nowrap">${kH}</td>
+      <td style="white-space:nowrap">
+        <button class="abtn" onclick="window.open('${url}','_blank')">📍 MAP</button>
+        <button class="abtn ${isC?'done':''}" onclick="toggleCtd('${x.id}')">${isC?'✓済':'アプローチ'}</button>
+      </td></tr>`;
+  }).join('');
+  updateBulk();
+}
+
+function setF(f){G.filter=f;document.querySelectorAll('.ft').forEach(t=>t.classList.toggle('on',t.dataset.f===f));G.checked.clear();renderTbl();}
+
+// ── CHECKBOX ───────────────────────────────
+function toggleCk(id,v){v?G.checked.add(id):G.checked.delete(id);const r=document.querySelector(`tr[data-id="${id}"]`);if(r)r.classList.toggle('sel',v);updateBulk();}
+function toggleAll(cb){const ids=[...document.querySelectorAll('#tbody tr[data-id]')].map(r=>r.dataset.id);ids.forEach(id=>cb.checked?G.checked.add(id):G.checked.delete(id));renderTbl();}
+function clearSel(){G.checked.clear();renderTbl();}
+function updateBulk(){const n=G.checked.size,bar=document.getElementById('bulk-bar');if(n>0&&G.ktOk){bar.classList.add('on');document.getElementById('blbl').textContent=`${n}件選択中`;document.getElementById('bsend').disabled=false;}else bar.classList.remove('on');}
+
+// ── kintone REGISTER ───────────────────────
+async function regOne(id){
+  const p=G.results.find(r=>r.id===id);if(!p)return;
+  const el=document.getElementById(`kts-${id}`);
+  if(el){el.className='kts';el.textContent='送信中...';}
+  try{
+    await callProxy([p]);
+    markReged(id,'ok');
+    if(el){el.className='kts reged';el.textContent='✓ 登録済';}
+    toast(`「${p.name}」をkintoneに登録しました`,'tok');
+  }catch(e){
+    markReged(id,'err');
+    if(el){el.className='kts err';el.textContent='✗ エラー';}
+    toast('登録エラー: '+e.message,'terr');
+  }
+}
+
+async function bulkReg(){
+  const ids=[...G.checked];if(!ids.length)return;
+  const reged=loadReged();
+  const targets=ids.map(id=>G.results.find(r=>r.id===id)).filter(Boolean).filter(p=>reged[p.id]!=='ok');
+  if(!targets.length){toast('選択中の店舗はすでに登録済みです','tinf');return;}
+  document.getElementById('bsend').disabled=true;
+  document.getElementById('blbl').textContent=`送信中... 0/${targets.length}`;
+  let sent=0,errs=0;
+  for(let i=0;i<targets.length;i+=20){
+    const chunk=targets.slice(i,i+20);
+    try{await callProxy(chunk);chunk.forEach(p=>{markReged(p.id,'ok');sent++;});}
+    catch(e){chunk.forEach(p=>{markReged(p.id,'err');errs++;});}
+    document.getElementById('blbl').textContent=`送信中... ${sent+errs}/${targets.length}`;
+    if(i+20<targets.length)await sleep(300);
+  }
+  G.checked.clear();renderTbl();
+  toast(errs===0?`${sent}件をkintoneに登録しました ✓`:`${sent}件登録、${errs}件エラー`,errs===0?'tok':'terr');
+}
+
+async function callProxy(places){
+  const res=await fetch('/api/kintone',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({places:places.map(p=>({
+      place_id:p.id,name:p.name,area:p.area,vicinity:p.addr,
+      score:p.sc,tierLabel:tier(p.sc).l,rating:p.rating,reviews:p.reviews,
+      statusLabel:p.statusL,mapsUrl:`https://www.google.com/maps/place/?q=place_id:${p.id}`,
+      scanDate:new Date(p.sd).toLocaleDateString('ja-JP'),
+    }))})
+  });
+  const j=await res.json();
+  if(!res.ok)throw new Error(j.error||`HTTP ${res.status}`);
+  return j;
+}
+
+// ── STORAGE ────────────────────────────────
+function loadCtd(){try{return new Set(JSON.parse(localStorage.getItem('vlr_ctd')||'[]'));}catch{return new Set();}}
+function saveCtd(s){localStorage.setItem('vlr_ctd',JSON.stringify([...s]));}
+function toggleCtd(id){const s=loadCtd();s.has(id)?s.delete(id):s.add(id);saveCtd(s);renderTbl();}
+function clearCtd(){if(confirm('アプローチ済をリセットしますか？')){localStorage.removeItem('vlr_ctd');renderTbl();}}
+function loadBase(){try{return JSON.parse(localStorage.getItem('vlr_base')||'{}');}catch{return{};}}
+function saveBase(res){const o={};res.forEach(r=>{o[r.id]={rating:r.rating,rc:r.reviews,sd:r.sd};});localStorage.setItem('vlr_base',JSON.stringify(o));}
+function loadReged(){try{return JSON.parse(localStorage.getItem('vlr_reged')||'{}');}catch{return{};}}
+function markReged(id,v){const o=loadReged();o[id]=v;localStorage.setItem('vlr_reged',JSON.stringify(o));}
+
+// ── CSV ────────────────────────────────────
+function exportCSV(){
+  const ctd=loadCtd(),reged=loadReged(),bom='\uFEFF';
+  const h='順位,店舗名,エリア,住所,リスクスコア,リスクランク,評価,口コミ数,ステータス,アプローチ済,kintone登録,GoogleMaps';
+  const b=G.results.map((x,i)=>[i+1,x.name,x.area,x.addr,x.sc,tier(x.sc).l,x.rating??'',x.reviews,x.statusL,ctd.has(x.id)?'済':'',reged[x.id]==='ok'?'登録済':'',`https://www.google.com/maps/place/?q=place_id:${x.id}`].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([bom+h+'\n'+b],{type:'text/csv;charset=utf-8;'})),download:`VELETA_閉店予測_${new Date().toLocaleDateString('ja-JP').replace(/\//g,'-')}.csv`});
+  a.click();
+}
+
+// ── TOAST ──────────────────────────────────
+function toast(msg,cls='tok'){
+  const w=document.getElementById('toast-w'),el=document.createElement('div');
+  el.className=`toast ${cls}`;el.textContent=msg;w.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .4s';setTimeout(()=>el.remove(),400);},3500);
+}
+
+// ── UTIL ───────────────────────────────────
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function setSS(t){document.getElementById('scan-s').textContent=t;}
+function setProg(pct,cur,tot){document.getElementById('prog-f').style.width=pct+'%';document.getElementById('prog-p').textContent=pct+'%';document.getElementById('prog-a').textContent=`${cur} / ${tot} コール`;}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+boot();
+</script>
+</body>
+</html>
