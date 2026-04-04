@@ -827,24 +827,48 @@ function goStep(n) {
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+function showErr(id, msg) {
+  clearErrs();
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = '#8b3a2a';
+  el.style.boxShadow = '0 0 0 3px rgba(139,58,42,0.15)';
+  const err = document.createElement('p');
+  err.className = 'field-err';
+  err.textContent = msg;
+  err.style.cssText = 'color:#8b3a2a;font-size:11px;margin-top:5px';
+  el.parentNode.insertBefore(err, el.nextSibling);
+  el.focus();
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function clearErrs() {
+  document.querySelectorAll('.field-err').forEach(e => e.remove());
+  document.querySelectorAll('.fl-inp,.fl-sel').forEach(e => {
+    e.style.borderColor = '';
+    e.style.boxShadow = '';
+  });
+}
 function validateStep(n) {
+  clearErrs();
   if (n===1) {
-    const shopname = v('f-shopname'), name = v('f-name'), tel = v('f-tel'), email = v('f-email');
-    if (!shopname) { alert('店舗名を入力してください'); return false; }
-    if (!name)     { alert('担当者名を入力してください'); return false; }
-    if (!tel)      { alert('電話番号を入力してください'); return false; }
-    if (!email || !email.includes('@')) { alert('有効なメールアドレスを入力してください'); return false; }
+    if (!v('f-shopname')) { showErr('f-shopname','店舗名を入力してください'); return false; }
+    if (!v('f-name'))     { showErr('f-name','担当者名を入力してください'); return false; }
+    if (!v('f-tel'))      { showErr('f-tel','電話番号を入力してください'); return false; }
+    const em = v('f-email');
+    if (!em || !em.includes('@')) { showErr('f-email','有効なメールアドレスを入力してください'); return false; }
   }
   if (n===2) {
-    if (!v('f-addr'))    { alert('店舗住所を入力してください'); return false; }
-    if (!v('f-tsubo'))   { alert('坪数を入力してください'); return false; }
-    if (!v('f-gyotai'))  { alert('業態を選択してください'); return false; }
-    if (!v('f-rent'))    { alert('月額賃料を入力してください'); return false; }
-    if (!v('f-years'))   { alert('営業年数を選択してください'); return false; }
-    const ht = document.getElementById('f-hosho-type').value;
-    if (ht === 'known' && !v('f-hosho')) { alert('保証金総額を入力してください'); return false; }
-    const st = document.getElementById('f-syakku-type').value;
-    if (st === 'known' && v('f-syakku') === '') { alert('償却条件を入力してください'); return false; }
+    if (!v('f-addr'))   { showErr('f-addr','店舗住所を入力してください'); return false; }
+    if (!v('f-tsubo'))  { showErr('f-tsubo','坪数を入力してください'); return false; }
+    if (!v('f-gyotai')) { showErr('f-gyotai','業態を選択してください'); return false; }
+    if (!v('f-rent'))   { showErr('f-rent','月額賃料を入力してください'); return false; }
+    if (!v('f-years'))  { showErr('f-years','営業年数を選択してください'); return false; }
+    if (document.getElementById('f-hosho-type').value==='known' && !v('f-hosho')) {
+      showErr('f-hosho','保証金総額を入力してください'); return false;
+    }
+    if (document.getElementById('f-syakku-type').value==='known' && v('f-syakku')==='') {
+      showErr('f-syakku','償却条件を入力してください'); return false;
+    }
   }
   return true;
 }
