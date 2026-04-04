@@ -421,6 +421,44 @@ body {
 }
 .cta-btn:hover { background: var(--gold2); transform: translateY(-1px); }
 
+.contact-info {
+  margin: 20px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px;
+  background: var(--warm);
+  border-radius: var(--r);
+  border: 1px solid var(--bdr2);
+}
+.ci-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.ci-icon { font-size: 14px; flex-shrink: 0; }
+.ci-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.ci-link:hover { text-decoration: underline; }
+.ci-note { font-size: 11px; color: var(--txt3); }
+.btn-totop {
+  padding: 10px 28px;
+  background: transparent;
+  color: var(--txt3);
+  border: 1px solid var(--bdr);
+  border-radius: 20px;
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+}
+.btn-totop:hover { color: var(--txt2); border-color: var(--txt2); }
 .registered-badge {
   display: inline-flex;
   align-items: center;
@@ -680,10 +718,25 @@ body {
     <div class="cta-section">
       <h3 class="cta-title">より正確な査定を無料で</h3>
       <p class="cta-desc">VELETAは名古屋最大級の造作譲渡実績を持つ不動産会社です。<br>担当者が物件を直接確認し、より正確な査定と最適な次のテナントをご提案します。</p>
-      <a href="tel:0522639500" class="cta-btn">📞 無料相談の予約をする</a>
+      <a href="tel:0529503075" class="cta-btn">📞 無料相談の予約をする</a>
+      <div class="contact-info">
+        <div class="ci-row">
+          <span class="ci-icon">📞</span>
+          <a href="tel:0529503075" class="ci-link">052-950-3075</a>
+          <span class="ci-note">（平日 9:00〜18:00）</span>
+        </div>
+        <div class="ci-row">
+          <span class="ci-icon">✉️</span>
+          <a href="mailto:info@veletainc.com" class="ci-link">info@veletainc.com</a>
+        </div>
+      </div>
       <div id="reg-badge" style="display:none">
         <div class="registered-badge">✓ お問い合わせ情報をVELETAが受信しました</div>
       </div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px">
+      <button class="btn-totop" onclick="window.scrollTo({top:0,behavior:'smooth'});goStep(1)">↑ トップに戻る</button>
     </div>
   </div>
 
