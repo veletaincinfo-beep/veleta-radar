@@ -566,6 +566,7 @@ body {
     <div class="btn-row">
       <button class="btn-next" onclick="goStep(2)">次へ — 物件情報を入力 →</button>
     </div>
+    <p id="debug-msg" style="color:#8b3a2a;font-size:12px;margin-top:12px;text-align:center"></p>
   </div>
 
   <!-- ── STEP 2 物件情報 ── -->
@@ -819,12 +820,21 @@ function setProg(n) {
 
 // ── NAVIGATION ────────────────────────────────
 function goStep(n) {
-  if (n > 1 && !validateStep(n-1)) return;
-  [1,2,3,4].forEach(i => {
-    document.getElementById('s'+i).classList.toggle('on', i===n);
-  });
-  setProg(n);
-  window.scrollTo({top:0, behavior:'smooth'});
+  try {
+    if (n > 1) {
+      const valid = validateStep(n-1);
+      if (!valid) return;
+    }
+    [1,2,3,4].forEach(i => {
+      const el = document.getElementById('s'+i);
+      if (el) el.classList.toggle('on', i===n);
+    });
+    setProg(n);
+    window.scrollTo({top:0, behavior:'smooth'});
+  } catch(e) {
+    const dbg = document.getElementById('debug-msg');
+    if (dbg) dbg.textContent = 'エラー: ' + e.message;
+  }
 }
 
 function showErr(id, msg) {
