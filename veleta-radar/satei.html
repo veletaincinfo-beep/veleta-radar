@@ -723,11 +723,11 @@ body {
         <div class="ci-row">
           <span class="ci-icon">📞</span>
           <a href="tel:0529503075" class="ci-link">052-950-3075</a>
-          <span class="ci-note">（平日 9:00〜18:00）</span>
+          <span class="ci-note">月〜金 9:00〜19:00 / 土 10:00〜17:00 / 日祝休</span>
         </div>
         <div class="ci-row">
           <span class="ci-icon">✉️</span>
-          <a href="mailto:info@veletainc.com" class="ci-link">info@veletainc.com</a>
+          <a href="/cdn-cgi/l/email-protection#1d74737b725d6b787178697c74737e337e7270" class="ci-link"><span class="__cf_email__" data-cfemail="254c4b434a655340494051444c4b460b464a48">[email&#160;protected]</span></a>
         </div>
       </div>
       <div id="reg-badge" style="display:none">
@@ -748,10 +748,10 @@ body {
 </div>
 
 <footer class="site-footer">
-  © 2026 株式会社VELETA　|　不動産部　|　名古屋市中区
+  © 2026 株式会社VELETA　|　名古屋市東区東桜1-9-29 オアシス栄ビル4F
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CHECKBOX DATA ──────────────────────────────
 const KITCHEN = [
   { id:'k1',  lbl:'縦型冷蔵庫・冷凍庫', pts:5 },
@@ -981,16 +981,4 @@ async function registerToKintone(center, low, high, hoshoReturn, temochi) {
   try {
     const res = await fetch('/api/satei', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    if (res.ok) {
-      document.getElementById('reg-badge').style.display = 'block';
-    }
-  } catch(e) {
-    console.warn('kintone登録エラー:', e);
-  }
-}
-</script>
-</body>
-</html>
+      headers: { 'Content-Type': 'application/
