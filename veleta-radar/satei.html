@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>造作譲渡 無料査定 | VELETA</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1610;
+  --paper:  #faf8f3;
+  --warm:   #f0ebe0;
+  --gold:   #9a7a3a;
+  --gold2:  #c4a35a;
+  --rust:   #8b3a2a;
+  --sage:   #4a6741;
+  --txt:    #2c2820;
+  --txt2:   #6b6258;
+  --txt3:   #a09890;
+  --bdr:    #d8d0c0;
+  --bdr2:   #e8e0d0;
+  --serif:  'Shippori Mincho', serif;
+  --sans:   'Noto Sans JP', sans-serif;
+  --r:      4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--paper);
+  color: var(--txt);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────── */
+.site-header {
+  background: var(--ink);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--gold2);
+  letter-spacing: 3px;
+}
+.logo-sub {
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* ── HERO ──────────────────────────── */
+.hero {
+  background: var(--ink);
+  padding: 64px 32px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold2);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 5vw, 48px);
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 em {
+  color: var(--gold2);
+  font-style: normal;
+}
+.hero-desc {
+  font-size: 14px;
+  color: #aaa;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  line-height: 1.8;
+  position: relative;
+}
+.hero-badges {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hbadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #ccc;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 5px 14px;
+}
+
+/* ── PROGRESS ──────────────────────── */
+.progress-wrap {
+  background: var(--warm);
+  border-bottom: 1px solid var(--bdr);
+  padding: 0 32px;
+}
+.progress-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+}
+.pstep {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  position: relative;
+  cursor: default;
+}
+.pstep:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 50%; transform: translateY(-50%);
+  width: 1px; height: 32px;
+  background: var(--bdr);
+}
+.pnum {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--bdr);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  color: var(--txt3);
+  margin-bottom: 4px;
+  transition: all 0.3s;
+}
+.plbl {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--txt3);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.pstep.active .pnum { background: var(--gold); border-color: var(--gold); color: #fff; }
+.pstep.active .plbl { color: var(--gold); font-weight: 500; }
+.pstep.done .pnum   { background: var(--sage); border-color: var(--sage); color: #fff; }
+.pstep.done .plbl   { color: var(--sage); }
+
+/* ── FORM WRAPPER ──────────────────── */
+.form-outer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.screen { display: none; }
+.screen.on { display: block; }
+
+.step-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.step-desc {
+  font-size: 13px;
+  color: var(--txt2);
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--bdr2);
+}
+
+/* ── FIELD ─────────────────────────── */
+.fl { margin-bottom: 24px; }
+.fl-lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--txt2);
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+.req {
+  font-size: 10px;
+  background: var(--rust);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0;
+}
+.fl-inp, .fl-sel, .fl-ta {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--bdr);
+  border-radius: var(--r);
+  padding: 11px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--txt);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+.fl-inp:focus, .fl-sel:focus, .fl-ta:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(154,122,58,0.1);
+}
+.fl-ta { resize: vertical; min-height: 80px; }
+.fl-hint {
+  font-size: 11px;
+  color: var(--txt3);
+  margin-top: 5px;
+  line-height: 1.6;
+}
+.fl-warn { font-size: 11px; color: var(--rust); margin-top: 5px; line-height: 1.6; }
+.fl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:560px){ .fl-grid { grid-template-columns: 1fr; } }
+
+/* ── CHECKBOXES ─────────────────────── */
+.cb-section {
+  margin-bottom: 28px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--bdr2);
+  border-radius: var(--r);
+}
+.cb-section-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--txt2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bdr2);
+}
+.cb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media(max-width:560px){ .cb-grid { grid-template-columns: repeat(2,1fr); } }
+.cb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--bdr2);
+  border-radius: var(--r);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--txt2);
+  transition: all 0.15s;
+  user-select: none;
+}
+.cb-item input { display: none; }
+.cb-dot {
+  width: 14px; height: 14px;
+  border: 1px solid var(--bdr);
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-size: 10px; color: transparent;
+}
+.cb-item.on {
+  border-color: var(--gold);
+  background: rgba(154,122,58,0.05);
+  color: var(--gold);
+}
+.cb-item.on .cb-dot {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #fff;
+}
+
+/* ── BUTTONS ────────────────────────── */
+.btn-row { display: flex; gap: 12px; margin-top: 36px; }
+.btn-next {
+  flex: 1;
+  padding: 16px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-next:hover { background: #2d2820; transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+.btn-back {
+  padding: 16px 24px;
+  background: transparent;
+  color: var(--txt2);
+  border: 1px solid var(--bdr);
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-back:hover { border-color: var(--txt2); color: var(--txt); }
+
+/* ── RESULT ────────────────────────── */
+.result-card {
+  background: var(--ink);
+  border-radius: 8px;
+  padding: 36px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+}
+.result-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold2);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.result-amount {
+  font-family: var(--serif);
+  font-size: clamp(32px, 6vw, 52px);
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.result-range {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 24px;
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.result-cell {
+  background: rgba(255,255,255,0.04);
+  padding: 14px 16px;
+}
+.rc-lbl { font-size: 10px; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
+.rc-val { font-family: var(--serif); font-size: 20px; color: #fff; }
+.rc-note { font-size: 11px; color: #666; margin-top: 3px; }
+
+.result-notes {
+  background: rgba(154,122,58,0.08);
+  border: 1px solid rgba(154,122,58,0.2);
+  border-radius: var(--r);
+  padding: 16px;
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.result-notes strong { color: var(--gold2); }
+
+.cta-section {
+  background: #fff;
+  border: 1px solid var(--bdr);
+  border-radius: 8px;
+  padding: 28px;
+  text-align: center;
+}
+.cta-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.cta-desc { font-size: 13px; color: var(--txt2); margin-bottom: 20px; line-height: 1.7; }
+.cta-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.cta-btn:hover { background: var(--gold2); transform: translateY(-1px); }
+
+.registered-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--sage);
+  background: rgba(74,103,65,0.08);
+  border: 1px solid rgba(74,103,65,0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-top: 16px;
+}
+
+/* ── LOADING ────────────────────────── */
+#loading-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,22,16,0.85);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+#loading-overlay.on { display: flex; }
+.spin {
+  width: 40px; height: 40px;
+  border: 2px solid rgba(196,163,90,0.3);
+  border-top-color: var(--gold2);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-txt { font-size: 13px; color: #aaa; letter-spacing: 2px; }
+
+/* ── FOOTER ─────────────────────────── */
+.site-footer {
+  background: var(--ink);
+  padding: 24px 32px;
+  text-align: center;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="logo">VELETA</div>
+    <div class="logo-sub">REAL ESTATE × INTERIOR</div>
+  </div>
+  <div style="font-size:11px;color:#555;letter-spacing:1px">造作譲渡 無料査定</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Free Valuation Service</div>
+  <h1>造作譲渡金<br><em>無料査定</em>フォーム</h1>
+  <p class="hero-desc">店舗情報を入力するだけで、造作譲渡金の概算相場と保証金の手残りを即時算出します。完全無料・個人情報の外部提供なし。</p>
+  <div class="hero-badges">
+    <span class="hbadge">⏱ 入力3分</span>
+    <span class="hbadge">📊 即時算出</span>
+    <span class="hbadge">🔒 無料・秘密厳守</span>
+  </div>
+</div>
+
+<nav class="progress-wrap">
+  <div class="progress-inner">
+    <div class="pstep active" id="ps1"><div class="pnum">1</div><div class="plbl">連絡先</div></div>
+    <div class="pstep" id="ps2"><div class="pnum">2</div><div class="plbl">物件情報</div></div>
+    <div class="pstep" id="ps3"><div class="pnum">3</div><div class="plbl">設備・内装</div></div>
+    <div class="pstep" id="ps4"><div class="pnum">4</div><div class="plbl">査定結果</div></div>
+  </div>
+</nav>
+
+<div class="form-outer">
+
+  <!-- ── STEP 1 連絡先 ── -->
+  <div id="s1" class="screen on">
+    <h2 class="step-title">ご連絡先</h2>
+    <p class="step-desc">査定結果をお送りするため、ご連絡先をご入力ください。</p>
+
+    <div class="fl">
+      <label class="fl-lbl">店舗名 <span class="req">必須</span></label>
+      <input id="f-shopname" class="fl-inp" type="text" placeholder="例：鮨処 山田">
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl">担当者名 <span class="req">必須</span></label>
+        <input id="f-name" class="fl-inp" type="text" placeholder="例：山田 太郎">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl">電話番号 <span class="req">必須</span></label>
+        <input id="f-tel" class="fl-inp" type="tel" placeholder="例：090-1234-5678">
+      </div>
+    </div>
+    <div class="fl">
+      <label class="fl-lbl">メールアドレス <span class="req">必須</span></label>
+      <input id="f-email" class="fl-inp" type="email" placeholder="例：yamada@example.com">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-next" onclick="goStep(2)">次へ — 物件情報を入力 →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2 物件情報 ── -->
+  <div id="s2" class="screen">
+    <h2 class="step-title">物件情報</h2>
+    <p class="step-desc">査定の基礎となる物件情報をご入力ください。</p>
+
+    <div class="fl">
+      <label class="fl-lbl">店舗住所 <span class="req">必須</span></label>
+      <input id="f-addr" class="fl-inp" type="text" placeholder="例：名古屋市中区大須3丁目1-1">
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl">坪数 <span class="req">必須</span></label>
+        <input id="f-tsubo" class="fl-inp" type="number" placeholder="例：20" min="1" max="500">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl">業態 <span class="req">必須</span></label>
+        <select id="f-gyotai" class="fl-sel">
+          <option value="">選択してください</option>
+          <optgroup label="和食・日本料理系">
+            <option>居酒屋・ダイニングバー</option>
+            <option>焼鳥・串焼き</option>
+            <option>焼肉・ホルモン</option>
+            <option>すし・海鮮</option>
+            <option>和食・定食</option>
+          </optgroup>
+          <optgroup label="麺類系">
+            <option>ラーメン・つけ麺</option>
+            <option>うどん・そば</option>
+            <option>パスタ・イタリアン</option>
+          </optgroup>
+          <optgroup label="洋食・その他">
+            <option>カフェ・喫茶</option>
+            <option>ハンバーガー・サンドイッチ</option>
+            <option>カレー</option>
+            <option>中華・餃子</option>
+            <option>タイ・アジア料理</option>
+            <option>その他</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="fl">
+      <label class="fl-lbl">現在の月額賃料 <span class="req">必須</span></label>
+      <input id="f-rent" class="fl-inp" type="number" placeholder="例：300000（円）" min="0">
+      <p class="fl-hint">共益費は含めず、賃料のみご入力ください。</p>
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl">保証金総額 <span class="req">必須</span></label>
+        <select id="f-hosho-type" class="fl-sel" onchange="toggleHosho()">
+          <option value="known">金額を入力する</option>
+          <option value="unknown">わからない</option>
+        </select>
+        <input id="f-hosho" class="fl-inp" type="number" placeholder="例：1800000（円）" min="0" style="margin-top:8px">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl">保証金償却条件 <span class="req">必須</span></label>
+        <select id="f-syakku-type" class="fl-sel" onchange="toggleSyakku()">
+          <option value="known">条件を入力する</option>
+          <option value="unknown">わからない</option>
+        </select>
+        <input id="f-syakku" class="fl-inp" type="number" placeholder="例：賃料の何ヶ月分（数字のみ）" min="0" max="24" style="margin-top:8px">
+        <p id="syakku-hint" class="fl-hint">保証金から償却される月数を入力。例：6（ヶ月分）</p>
+      </div>
+    </div>
+    <p class="fl-warn" style="margin-top:-16px;margin-bottom:20px">※ 保証金・償却条件が「わからない」の場合は手残り金額が正確に算出できません。</p>
+    <div class="fl">
+      <label class="fl-lbl">営業年数 <span class="req">必須</span></label>
+      <select id="f-years" class="fl-sel">
+        <option value="">選択してください</option>
+        <option value="u1">1年未満</option>
+        <option value="1to3">1〜3年</option>
+        <option value="3to5">3〜5年</option>
+        <option value="5to8">5〜8年</option>
+        <option value="8plus">8年以上</option>
+      </select>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(1)">← 戻る</button>
+      <button class="btn-next" onclick="goStep(3)">次へ — 設備・内装を入力 →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3 設備 ── -->
+  <div id="s3" class="screen">
+    <h2 class="step-title">設備・内装</h2>
+    <p class="step-desc">該当する設備・内装にチェックを入れてください。査定精度が上がります。</p>
+
+    <div class="cb-section">
+      <div class="cb-section-title">厨房機器</div>
+      <div class="cb-grid" id="cg-kitchen"></div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-title">内装</div>
+      <div class="cb-grid" id="cg-interior"></div>
+    </div>
+
+    <div class="cb-section">
+      <div class="cb-section-title">その他設備</div>
+      <div class="cb-grid" id="cg-other"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(2)">← 戻る</button>
+      <button class="btn-next" onclick="calcAndShow()">査定結果を見る →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4 結果 ── -->
+  <div id="s4" class="screen">
+    <h2 class="step-title">査定結果</h2>
+    <p class="step-desc">入力内容をもとに算出した概算です。詳細な査定はVELETAにご相談ください。</p>
+
+    <div class="result-card">
+      <div class="result-eyebrow">造作譲渡金 概算</div>
+      <div class="result-amount" id="r-center">—</div>
+      <div class="result-range" id="r-range">算出中...</div>
+      <div class="result-grid">
+        <div class="result-cell">
+          <div class="rc-lbl">下限目安</div>
+          <div class="rc-val" id="r-low">—</div>
+        </div>
+        <div class="result-cell">
+          <div class="rc-lbl">上限目安</div>
+          <div class="rc-val" id="r-high">—</div>
+        </div>
+        <div class="result-cell">
+          <div class="rc-lbl">保証金回収見込み</div>
+          <div class="rc-val" id="r-hosho">—</div>
+          <div class="rc-note" id="r-hosho-note"></div>
+        </div>
+        <div class="result-cell">
+          <div class="rc-lbl">手残り概算</div>
+          <div class="rc-val" id="r-temochi">—</div>
+          <div class="rc-note" id="r-temochi-note"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-notes">
+      <strong>【免責事項】</strong><br>
+      本査定は株式会社VELETAの成約データをもとにした参考値であり、保証するものではありません。
+      リース品・設備の状態・次テナントの業態により実際の譲渡金は変動します。
+      正確な査定はVELETAの無料個別相談をご利用ください。
+    </div>
+
+    <div class="cta-section">
+      <h3 class="cta-title">より正確な査定を無料で</h3>
+      <p class="cta-desc">VELETAは名古屋最大級の造作譲渡実績を持つ不動産会社です。<br>担当者が物件を直接確認し、より正確な査定と最適な次のテナントをご提案します。</p>
+      <a href="tel:0522639500" class="cta-btn">📞 無料相談の予約をする</a>
+      <div id="reg-badge" style="display:none">
+        <div class="registered-badge">✓ お問い合わせ情報をVELETAが受信しました</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /form-outer -->
+
+<div id="loading-overlay">
+  <div class="spin"></div>
+  <div class="loading-txt">査定計算中...</div>
+</div>
+
+<footer class="site-footer">
+  © 2026 株式会社VELETA　|　不動産部　|　名古屋市中区
+</footer>
+
+<script>
+// ── CHECKBOX DATA ──────────────────────────────
+const KITCHEN = [
+  { id:'k1',  lbl:'縦型冷蔵庫・冷凍庫', pts:5 },
+  { id:'k2',  lbl:'コールドテーブル',    pts:5 },
+  { id:'k3',  lbl:'製氷機',             pts:5 },
+  { id:'k4',  lbl:'冷蔵ショーケース',    pts:5 },
+  { id:'k5',  lbl:'冷凍ストッカー',      pts:4 },
+  { id:'k6',  lbl:'食器洗浄機',          pts:8 },
+  { id:'k7',  lbl:'フライヤー',          pts:8 },
+  { id:'k8',  lbl:'炊飯器・保温ジャー',  pts:3 },
+  { id:'k9',  lbl:'ゆで麺機',            pts:10 },
+  { id:'k10', lbl:'オーブン',            pts:5 },
+  { id:'k11', lbl:'シンク・作業台・板金類', pts:4 },
+  { id:'k12', lbl:'ダクト・換気設備',    pts:20 },
+];
+const INTERIOR = [
+  { id:'i1', lbl:'テーブル・椅子セット', pts:5 },
+  { id:'i2', lbl:'内装仕上げ良好',       pts:10 },
+  { id:'i3', lbl:'造作カウンター',        pts:8 },
+];
+const OTHER = [
+  { id:'o1', lbl:'POSレジ',         pts:3 },
+  { id:'o2', lbl:'業務用エアコン',   pts:5 },
+  { id:'o3', lbl:'音響・照明設備',   pts:5 },
+];
+
+// ── AREA TIER MAP ──────────────────────────────
+const KU_TIER = {
+  '中区':1.15,'千種区':1.15,'名東区':1.15,
+  '中村区':1.00,'東区':1.00,'昭和区':1.00,'熱田区':1.00,'守山区':1.00,'瑞穂区':1.00,
+  '天白区':0.85,'北区':0.85,'西区':0.85,
+  '港区':0.70,'中川区':0.70,'南区':0.70,
+};
+
+// ── YEAR COEF ─────────────────────────────────
+const YEAR_COEF = { u1:1.30, '1to3':1.10, '3to5':1.00, '5to8':0.80, '8plus':0.60 };
+
+// ── INIT CHECKBOXES ───────────────────────────
+function buildCbs(items, gridId) {
+  const g = document.getElementById(gridId);
+  items.forEach(item => {
+    const lbl = document.createElement('label');
+    lbl.className = 'cb-item';
+    lbl.innerHTML = `<input type="checkbox" id="${item.id}"><span class="cb-dot">✓</span><span>${item.lbl}</span>`;
+    const cb = lbl.querySelector('input');
+    cb.addEventListener('change', () => lbl.classList.toggle('on', cb.checked));
+    g.appendChild(lbl);
+  });
+}
+
+buildCbs(KITCHEN,  'cg-kitchen');
+buildCbs(INTERIOR, 'cg-interior');
+buildCbs(OTHER,    'cg-other');
+
+// ── PROGRESS ──────────────────────────────────
+function setProg(n) {
+  [1,2,3,4].forEach(i => {
+    const el = document.getElementById('ps'+i);
+    el.classList.remove('active','done');
+    if (i === n) el.classList.add('active');
+    if (i < n)  el.classList.add('done');
+  });
+}
+
+// ── NAVIGATION ────────────────────────────────
+function goStep(n) {
+  if (n > 1 && !validateStep(n-1)) return;
+  [1,2,3,4].forEach(i => {
+    document.getElementById('s'+i).classList.toggle('on', i===n);
+  });
+  setProg(n);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function validateStep(n) {
+  if (n===1) {
+    const shopname = v('f-shopname'), name = v('f-name'), tel = v('f-tel'), email = v('f-email');
+    if (!shopname) { alert('店舗名を入力してください'); return false; }
+    if (!name)     { alert('担当者名を入力してください'); return false; }
+    if (!tel)      { alert('電話番号を入力してください'); return false; }
+    if (!email || !email.includes('@')) { alert('有効なメールアドレスを入力してください'); return false; }
+  }
+  if (n===2) {
+    if (!v('f-addr'))    { alert('店舗住所を入力してください'); return false; }
+    if (!v('f-tsubo'))   { alert('坪数を入力してください'); return false; }
+    if (!v('f-gyotai'))  { alert('業態を選択してください'); return false; }
+    if (!v('f-rent'))    { alert('月額賃料を入力してください'); return false; }
+    if (!v('f-years'))   { alert('営業年数を選択してください'); return false; }
+    const ht = document.getElementById('f-hosho-type').value;
+    if (ht === 'known' && !v('f-hosho')) { alert('保証金総額を入力してください'); return false; }
+    const st = document.getElementById('f-syakku-type').value;
+    if (st === 'known' && v('f-syakku') === '') { alert('償却条件を入力してください'); return false; }
+  }
+  return true;
+}
+
+// ── HELPERS ───────────────────────────────────
+const v   = id => document.getElementById(id)?.value?.trim() || '';
+const fmt = n  => n >= 10000 ? `${(n/10000).toFixed(0)}万円` : `${n.toLocaleString()}円`;
+
+function toggleHosho() {
+  const known = document.getElementById('f-hosho-type').value === 'known';
+  document.getElementById('f-hosho').style.display = known ? '' : 'none';
+}
+function toggleSyakku() {
+  const known = document.getElementById('f-syakku-type').value === 'known';
+  document.getElementById('f-syakku').style.display = known ? '' : 'none';
+  document.getElementById('syakku-hint').style.display = known ? '' : 'none';
+}
+
+// ── AREA DETECTION ────────────────────────────
+function detectTier(addr) {
+  const m = addr.match(/名古屋市(\S+区)/);
+  if (m) return KU_TIER[m[1]] || 0.75;
+  // 市外
+  return 0.75;
+}
+
+// ── CALC ──────────────────────────────────────
+function calc() {
+  const rent   = Number(v('f-rent'));
+  const tsubo  = Number(v('f-tsubo'));
+  const years  = v('f-years');
+  const addr   = v('f-addr');
+
+  // 1. ベース = 賃料 × 4ヶ月
+  const base = rent * 4;
+
+  // 2. エリア係数
+  const areaTier = detectTier(addr);
+
+  // 3. 年数係数
+  const yearCoef = YEAR_COEF[years] || 1.0;
+
+  // 4. 設備加算（万円→円）
+  const allItems = [...KITCHEN, ...INTERIOR, ...OTHER];
+  let equip = 0;
+  allItems.forEach(item => {
+    if (document.getElementById(item.id)?.checked) equip += item.pts * 10000;
+  });
+
+  // 5. 査定値
+  const center = Math.round((base * areaTier * yearCoef + equip) / 10000) * 10000;
+  const low    = Math.round(center * 0.7 / 10000) * 10000;
+  const high   = Math.round(center * 1.3 / 10000) * 10000;
+
+  // 6. 保証金計算
+  const hoshoType  = document.getElementById('f-hosho-type').value;
+  const syakkuType = document.getElementById('f-syakku-type').value;
+  let hoshoReturn = null, temochi = null;
+
+  if (hoshoType === 'known' && syakkuType === 'known') {
+    const hosho  = Number(v('f-hosho'))  || 0;
+    const syakku = Number(v('f-syakku')) || 0;
+    hoshoReturn  = Math.max(0, hosho - rent * syakku);
+    temochi      = Math.round((low + hoshoReturn) / 10000) * 10000;
+  } else if (hoshoType === 'known') {
+    const hosho = Number(v('f-hosho')) || 0;
+    hoshoReturn = hosho; // 償却不明のため全額表示
+  }
+
+  return { center, low, high, hoshoReturn, temochi, areaTier, yearCoef, equip };
+}
+
+async function calcAndShow() {
+  if (!validateStep(3)) return;
+
+  document.getElementById('loading-overlay').classList.add('on');
+  await new Promise(r => setTimeout(r, 1200)); // UX演出
+
+  const { center, low, high, hoshoReturn, temochi } = calc();
+
+  document.getElementById('r-center').textContent = fmt(center);
+  document.getElementById('r-range').textContent  = `概算レンジ：${fmt(low)} 〜 ${fmt(high)}`;
+  document.getElementById('r-low').textContent    = fmt(low);
+  document.getElementById('r-high').textContent   = fmt(high);
+
+  if (hoshoReturn !== null) {
+    document.getElementById('r-hosho').textContent = fmt(hoshoReturn);
+    document.getElementById('r-hosho-note').textContent = document.getElementById('f-syakku-type').value === 'unknown' ? '（償却条件不明のため参考値）' : '';
+  } else {
+    document.getElementById('r-hosho').textContent = '—';
+    document.getElementById('r-hosho-note').textContent = '保証金・償却条件を入力すると算出できます';
+  }
+
+  if (temochi !== null) {
+    document.getElementById('r-temochi').textContent = fmt(temochi) + '〜';
+    document.getElementById('r-temochi-note').textContent = '（造作下限 + 保証金回収）';
+  } else {
+    document.getElementById('r-temochi').textContent = '—';
+    document.getElementById('r-temochi-note').textContent = '保証金・償却条件を入力すると算出できます';
+  }
+
+  document.getElementById('loading-overlay').classList.remove('on');
+  goStep(4);
+
+  // kintoneに自動登録
+  registerToKintone(center, low, high, hoshoReturn, temochi);
+}
+
+// ── kintone REGISTER ──────────────────────────
+async function registerToKintone(center, low, high, hoshoReturn, temochi) {
+  const allItems = [...KITCHEN, ...INTERIOR, ...OTHER];
+  const checked  = allItems.filter(i => document.getElementById(i.id)?.checked).map(i => i.lbl);
+
+  const payload = {
+    shopname:  v('f-shopname'),
+    name:      v('f-name'),
+    tel:       v('f-tel'),
+    email:     v('f-email'),
+    addr:      v('f-addr'),
+    tsubo:     v('f-tsubo'),
+    gyotai:    v('f-gyotai'),
+    rent:      v('f-rent'),
+    hosho:     document.getElementById('f-hosho-type').value === 'known' ? v('f-hosho') : 'わからない',
+    syakku:    document.getElementById('f-syakku-type').value === 'known' ? v('f-syakku')+'ヶ月' : 'わからない',
+    years:     v('f-years'),
+    equipment: checked.join('、'),
+    satei_center: center,
+    satei_low:    low,
+    satei_high:   high,
+    hosho_return: hoshoReturn ?? '',
+    temochi:      temochi ?? '',
+    inquiry_date: new Date().toLocaleDateString('ja-JP'),
+  };
+
+  try {
+    const res = await fetch('/api/satei', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      document.getElementById('reg-badge').style.display = 'block';
+    }
+  } catch(e) {
+    console.warn('kintone登録エラー:', e);
+  }
+}
+</script>
+</body>
+</html>
