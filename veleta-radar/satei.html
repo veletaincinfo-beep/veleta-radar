@@ -564,9 +564,9 @@ body {
     </div>
 
     <div class="btn-row">
-      <button class="btn-next" onclick="goStep(2)">次へ — 物件情報を入力 →</button>
+      <button class="btn-next" id="btn-s1">次へ — 物件情報を入力 →</button>
     </div>
-    <p id="debug-msg" style="color:#8b3a2a;font-size:12px;margin-top:12px;text-align:center"></p>
+    <p id="debug-msg" style="color:#8b3a2a;font-size:12px;margin-top:12px;text-align:center">ボタンを押してください</p>
   </div>
 
   <!-- ── STEP 2 物件情報 ── -->
@@ -807,6 +807,18 @@ function buildCbs(items, gridId) {
 buildCbs(KITCHEN,  'cg-kitchen');
 buildCbs(INTERIOR, 'cg-interior');
 buildCbs(OTHER,    'cg-other');
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('btn-s1');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      document.getElementById('debug-msg').textContent = 'ボタン押下検知 → 検証中...';
+      goStep(2);
+    });
+  } else {
+    document.getElementById('debug-msg').textContent = 'ボタン要素が見つかりません';
+  }
+});
 
 // ── PROGRESS ──────────────────────────────────
 function setProg(n) {
