@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1秒でわかる 美容サロン 造作譲渡金AI査定 | VELETA</title>
+<meta name="description" content="名古屋の美容サロン・ヘアサロンの造作譲渡金をAIが即時査定。住所・賃料・設備を入力するだけで造作価値と保証金の手残りを無料で算出。株式会社VELETA（名古屋市東区）">
+<meta name="keywords" content="美容室,ヘアサロン,造作譲渡,査定,名古屋,居抜き,造作譲渡金,相場,閉店,店舗売却">
+<meta property="og:title" content="美容サロン 造作譲渡金AI査定 | VELETA">
+<meta property="og:url" content="https://www.inuki-satei.com/salon.html">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.inuki-satei.com/salon.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8;--surface:#ffffff;--surface2:#f6f5f2;
+  --ink:#1a1a18;--ink2:#4a4a48;--ink3:#9a9a98;
+  --accent:#b8956a;--accent2:#d4b48a;--accent3:#f0e8dc;
+  --sage:#6b8c7a;--rust:#a05540;
+  --bdr:#e8e6e2;--bdr2:#f0ede8;
+  --serif:'Cormorant Garamond',serif;--sans:'Noto Sans JP',sans-serif;
+  --r:2px
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.7;min-height:100vh}
+
+.site-header{background:var(--surface);border-bottom:1px solid var(--bdr);padding:20px 40px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink);letter-spacing:4px}
+.logo-sub{font-size:9px;color:var(--ink3);letter-spacing:3px;margin-top:2px;text-transform:uppercase}
+.header-tag{font-size:10px;color:var(--ink3);letter-spacing:2px;border:1px solid var(--bdr);padding:4px 12px}
+
+.hero{background:var(--surface);padding:72px 40px 56px;text-align:center;border-bottom:1px solid var(--bdr)}
+.hero-eyebrow{font-size:10px;letter-spacing:6px;color:var(--accent);text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:300;color:var(--ink);line-height:1.2;margin-bottom:16px;letter-spacing:2px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-desc{font-size:13px;color:var(--ink2);line-height:2;max-width:480px;margin:0 auto 32px}
+.hero-badges{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.hbadge{font-size:10px;color:var(--ink3);letter-spacing:2px}
+.hbadge::before{content:'—  ';color:var(--accent2)}
+
+.prog-wrap{background:var(--surface2);border-bottom:1px solid var(--bdr)}
+.prog-inner{max-width:640px;margin:0 auto;display:flex}
+.pstep{flex:1;display:flex;flex-direction:column;align-items:center;padding:18px 8px;position:relative}
+.pstep:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:24px;background:var(--bdr)}
+.pnum{width:24px;height:24px;border-radius:50%;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink3);margin-bottom:5px;transition:all .3s;font-family:var(--serif)}
+.plbl{font-size:9px;letter-spacing:2px;color:var(--ink3);transition:color .3s;white-space:nowrap;text-transform:uppercase}
+.pstep.active .pnum{background:var(--accent);border-color:var(--accent);color:#fff}
+.pstep.active .plbl{color:var(--accent)}
+.pstep.done .pnum{background:var(--sage);border-color:var(--sage);color:#fff}
+.pstep.done .plbl{color:var(--sage)}
+
+.form-outer{max-width:640px;margin:0 auto;padding:56px 40px 80px}
+.screen{display:none}.screen.on{display:block}
+
+.step-title{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--ink);margin-bottom:6px;letter-spacing:1px}
+.step-desc{font-size:12px;color:var(--ink3);margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--bdr2);letter-spacing:.5px}
+
+.fl{margin-bottom:28px}
+.fl-lbl{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.req{font-size:9px;background:var(--rust);color:#fff;padding:1px 6px;letter-spacing:0;text-transform:none;border-radius:1px}
+.fl-inp,.fl-sel{width:100%;background:var(--surface);border:none;border-bottom:1px solid var(--bdr);padding:10px 0;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none;border-radius:0}
+.fl-inp:focus,.fl-sel:focus{border-bottom-color:var(--accent)}
+.fl-hint{font-size:11px;color:var(--ink3);margin-top:6px;line-height:1.6}
+.fl-warn{font-size:11px;color:var(--rust);margin-top:6px;line-height:1.6}
+.fl-err{font-size:11px;color:var(--rust);margin-top:8px;letter-spacing:.5px}
+.fl-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:520px){.fl-grid{grid-template-columns:1fr}}
+
+.cb-section{margin-bottom:32px}
+.cb-section-title{font-size:10px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--bdr2)}
+.cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:520px){.cb-grid{grid-template-columns:repeat(2,1fr)}}
+.cb-item{display:flex;align-items:center;gap:8px;padding:12px;border:1px solid var(--bdr2);cursor:pointer;font-size:11px;color:var(--ink3);transition:all .15s;user-select:none;background:var(--surface)}
+.cb-item input{display:none}
+.cb-dot{width:14px;height:14px;border:1px solid var(--bdr);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .15s}
+.cb-item.on{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
+.cb-item.on .cb-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.btn-row{display:flex;gap:12px;margin-top:40px}
+.btn-next{flex:1;padding:16px;background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:12px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;transition:all .2s;-webkit-appearance:none}
+.btn-next:active{opacity:.8}
+.btn-back{padding:16px 24px;background:transparent;color:var(--ink3);border:1px solid var(--bdr);font-family:var(--sans);font-size:12px;cursor:pointer;-webkit-appearance:none}
+
+.result-wrap{background:var(--surface);border:1px solid var(--bdr);padding:48px;margin-bottom:24px}
+.result-eyebrow{font-size:10px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+.result-amount{font-family:var(--serif);font-size:clamp(40px,7vw,64px);font-weight:300;color:var(--ink);line-height:1;margin-bottom:8px;letter-spacing:-1px}
+.result-range{font-size:12px;color:var(--ink3);margin-bottom:36px;letter-spacing:1px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--bdr2)}
+.result-cell{padding:20px 24px;border-right:1px solid var(--bdr2);border-bottom:1px solid var(--bdr2)}
+.result-cell:nth-child(2n){border-right:none}
+.result-cell:nth-child(3),.result-cell:nth-child(4){border-bottom:none}
+.rc-lbl{font-size:9px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:8px}
+.rc-val{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink)}
+.rc-note{font-size:10px;color:var(--ink3);margin-top:4px}
+
+.result-notes{font-size:11px;color:var(--ink3);line-height:1.9;margin-bottom:24px;padding:20px;background:var(--accent3);border-left:2px solid var(--accent2)}
+
+.cta-section{background:var(--ink);padding:40px;text-align:center}
+.cta-title{font-family:var(--serif);font-size:24px;font-weight:300;color:#fff;margin-bottom:8px;letter-spacing:2px}
+.cta-desc{font-size:12px;color:#888;margin-bottom:28px;line-height:1.9}
+.cta-btn{display:inline-block;padding:14px 40px;background:var(--accent);color:#fff;font-family:var(--sans);font-size:11px;letter-spacing:3px;cursor:pointer;text-decoration:none;text-transform:uppercase;-webkit-appearance:none}
+.contact-info{margin:24px 0 0;display:flex;flex-direction:column;gap:10px}
+.ci-row{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:#888;flex-wrap:wrap}
+.ci-link{color:var(--accent2);text-decoration:none}
+.registered-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--sage);background:rgba(107,140,122,.08);border:1px solid rgba(107,140,122,.2);padding:6px 16px;margin-top:16px;letter-spacing:1px}
+
+.btn-totop{margin-top:28px;display:block;width:100%;padding:14px;background:transparent;color:var(--ink3);border:1px solid var(--bdr);font-family:var(--sans);font-size:11px;cursor:pointer;letter-spacing:2px;-webkit-appearance:none}
+
+.site-footer{background:var(--surface2);border-top:1px solid var(--bdr);padding:24px 40px;text-align:center;font-size:10px;color:var(--ink3);letter-spacing:1px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div><div class="logo">VELETA</div><div class="logo-sub">Real Estate × Interior</div></div>
+  <div class="header-tag">Salon Valuation</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Veleta — Beauty Salon Valuation</div>
+  <div style="font-size:20px;font-weight:400;color:#555;letter-spacing:10px;font-family:var(--sans);margin-bottom:20px">美容サロン　造作譲渡金</div>
+  <div style="display:flex;align-items:baseline;justify-content:center;gap:0;margin-bottom:16px">
+    <span style="font-size:42px;font-weight:300;color:var(--ink);letter-spacing:2px;padding-right:16px;font-family:var(--serif)">AI</span>
+    <span style="font-size:56px;font-weight:200;color:var(--accent);letter-spacing:2px;line-height:1;font-style:italic;padding-right:16px;font-family:var(--serif)">１秒</span>
+    <span style="font-size:42px;font-weight:300;color:var(--ink);letter-spacing:2px;font-family:var(--serif)">査定</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;justify-content:center;margin:24px 0">
+    <div style="width:48px;height:0.5px;background:#c8b898"></div>
+    <div style="width:5px;height:5px;background:var(--accent);transform:rotate(45deg)"></div>
+    <div style="width:48px;height:0.5px;background:#c8b898"></div>
+  </div>
+  <p class="hero-desc">住所と賃料を入力するだけ。<br>AIが造作価値と保証金の手残りを即時算出します。</p>
+  <div class="hero-badges">
+    <span class="hbadge">入力３分</span>
+    <span class="hbadge">完全無料</span>
+    <span class="hbadge">秘密厳守</span>
+  </div>
+</div>
+<nav class="prog-wrap">
+  <div class="prog-inner">
+    <div class="pstep active" id="ps1"><div class="pnum">1</div><div class="plbl">連絡先</div></div>
+    <div class="pstep" id="ps2"><div class="pnum">2</div><div class="plbl">物件情報</div></div>
+    <div class="pstep" id="ps3"><div class="pnum">3</div><div class="plbl">設備</div></div>
+    <div class="pstep" id="ps4"><div class="pnum">4</div><div class="plbl">査定結果</div></div>
+  </div>
+</nav>
+
+<div class="form-outer">
+  <div id="s1" class="screen on">
+    <h2 class="step-title">ご連絡先</h2>
+    <p class="step-desc">査定後、VELETAよりご連絡させていただく場合があります。</p>
+    <div class="fl">
+      <label class="fl-lbl" for="f-shopname">サロン名 <span class="req">必須</span></label>
+      <input id="f-shopname" class="fl-inp" type="text" placeholder="例：Hair Salon HANA" autocomplete="organization">
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl" for="f-name">担当者名 <span class="req">必須</span></label>
+        <input id="f-name" class="fl-inp" type="text" placeholder="例：山田 花子" autocomplete="name">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl" for="f-tel">電話番号 <span class="req">必須</span></label>
+        <input id="f-tel" class="fl-inp" type="tel" placeholder="例：090-1234-5678" autocomplete="tel">
+      </div>
+    </div>
+    <div class="fl">
+      <label class="fl-lbl" for="f-email">メールアドレス <span class="req">必須</span></label>
+      <input id="f-email" class="fl-inp" type="email" placeholder="例：hana@example.com" autocomplete="email">
+    </div>
+    <div id="err1" class="fl-err"></div>
+    <div class="btn-row"><button class="btn-next" id="btn1">Next →</button></div>
+  </div>
+
+  <div id="s2" class="screen">
+    <h2 class="step-title">物件情報</h2>
+    <p class="step-desc">査定の基礎となる物件情報をご入力ください。</p>
+    <div class="fl">
+      <label class="fl-lbl" for="f-addr">サロン住所 <span class="req">必須</span></label>
+      <input id="f-addr" class="fl-inp" type="text" placeholder="例：名古屋市千種区覚王山通9-19" autocomplete="street-address">
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl" for="f-tsubo">坪数 <span class="req">必須</span></label>
+        <input id="f-tsubo" class="fl-inp" type="number" placeholder="例：15" min="1" max="200" inputmode="numeric">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl" for="f-gyotai">業態 <span class="req">必須</span></label>
+        <select id="f-gyotai" class="fl-sel">
+          <option value="">選択してください</option>
+          <option value="hair">ヘアサロン・美容室</option>
+          <option value="nail">ネイルサロン</option>
+          <option value="eyelash">アイラッシュ・アイブロウ</option>
+          <option value="esthetic">エステ・フェイシャル</option>
+          <option value="relax">リラクゼーション・マッサージ</option>
+          <option value="depilation">脱毛サロン</option>
+          <option value="total">トータルビューティー（複合）</option>
+        </select>
+      </div>
+    </div>
+    <div class="fl">
+      <label class="fl-lbl" for="f-rent">月額賃料（円） <span class="req">必須</span></label>
+      <input id="f-rent" class="fl-inp" type="number" placeholder="例：180000" min="0" inputmode="numeric">
+      <p class="fl-hint">共益費は含めず、賃料のみご入力ください。</p>
+    </div>
+    <div class="fl-grid">
+      <div class="fl">
+        <label class="fl-lbl" for="f-hosho-sel">保証金総額 <span class="req">必須</span></label>
+        <select id="f-hosho-sel" class="fl-sel"><option value="known">金額を入力する</option><option value="unknown">わからない</option></select>
+        <input id="f-hosho" class="fl-inp" type="number" placeholder="例：1080000（円）" min="0" inputmode="numeric" style="margin-top:12px">
+      </div>
+      <div class="fl">
+        <label class="fl-lbl" for="f-syakku-sel">保証金償却条件 <span class="req">必須</span></label>
+        <select id="f-syakku-sel" class="fl-sel"><option value="known">条件を入力する</option><option value="unknown">わからない</option></select>
+        <input id="f-syakku" class="fl-inp" type="number" placeholder="償却ヶ月数（例：6）" min="0" max="24" inputmode="numeric" style="margin-top:12px">
+        <p class="fl-hint" id="syakku-hint">賃料の何ヶ月分が償却されるか数字で入力。</p>
+      </div>
+    </div>
+    <p class="fl-warn">※ 保証金・償却条件が「わからない」の場合は手残り金額が正確に算出できません。</p>
+    <div class="fl" style="margin-top:24px">
+      <label class="fl-lbl" for="f-years">営業年数 <span class="req">必須</span></label>
+      <select id="f-years" class="fl-sel">
+        <option value="">選択してください</option>
+        <option value="u1">1年未満</option>
+        <option value="1to3">1〜3年</option>
+        <option value="3to5">3〜5年</option>
+        <option value="5to8">5〜8年</option>
+        <option value="8plus">8年以上</option>
+      </select>
+    </div>
+    <div id="err2" class="fl-err"></div>
+    <div class="btn-row">
+      <button class="btn-back" id="btn2b">← Back</button>
+      <button class="btn-next" id="btn2">Next →</button>
+    </div>
+  </div>
+
+  <div id="s3" class="screen">
+    <h2 class="step-title">設備・内装</h2>
+    <p class="step-desc">該当する設備にチェックを入れてください。査定精度が上がります。</p>
+    <div class="cb-section">
+      <div class="cb-section-title">シャンプー・洗浄系</div>
+      <div class="fl-grid" style="margin-bottom:16px">
+        <div class="fl">
+          <label class="fl-lbl" for="f-shampoo">シャンプーボウル・台</label>
+          <input id="f-shampoo" class="fl-inp" type="number" placeholder="例：3（台）" min="0" max="20" inputmode="numeric">
+        </div>
+      </div>
+      <div class="cb-grid" id="cg-wash"></div>
+    </div>
+    <div class="cb-section">
+      <div class="cb-section-title">施術設備</div>
+      <div class="fl-grid" style="margin-bottom:16px">
+        <div class="fl">
+          <label class="fl-lbl" for="f-setmen">セット面・鏡台</label>
+          <input id="f-setmen" class="fl-inp" type="number" placeholder="例：5（面）" min="0" max="30" inputmode="numeric">
+        </div>
+      </div>
+      <div class="cb-grid" id="cg-treatment"></div>
+    </div>
+    <div class="cb-section"><div class="cb-section-title">ネイル・アイ</div><div class="cb-grid" id="cg-nail"></div></div>
+    <div class="cb-section"><div class="cb-section-title">エステ・脱毛</div><div class="cb-grid" id="cg-esthetic"></div></div>
+    <div class="cb-section"><div class="cb-section-title">内装・その他</div><div class="cb-grid" id="cg-interior"></div></div>
+    <div class="btn-row">
+      <button class="btn-back" id="btn3b">← Back</button>
+      <button class="btn-next" id="btn3">査定結果を見る →</button>
+    </div>
+  </div>
+
+  <div id="s4" class="screen">
+    <h2 class="step-title">査定結果</h2>
+    <p class="step-desc">入力内容をもとに算出した概算です。詳細な査定はVELETAにご相談ください。</p>
+    <div class="result-wrap">
+      <div class="result-eyebrow">Valuation Result</div>
+      <div class="result-amount" id="r-center">—</div>
+      <div class="result-range" id="r-range">算出中...</div>
+      <div class="result-grid">
+        <div class="result-cell"><div class="rc-lbl">下限目安</div><div class="rc-val" id="r-low">—</div></div>
+        <div class="result-cell"><div class="rc-lbl">上限目安</div><div class="rc-val" id="r-high">—</div></div>
+        <div class="result-cell"><div class="rc-lbl">保証金回収見込み</div><div class="rc-val" id="r-hosho">—</div><div class="rc-note" id="r-hosho-note"></div></div>
+        <div class="result-cell"><div class="rc-lbl">手残り概算</div><div class="rc-val" id="r-temochi">—</div><div class="rc-note" id="r-temochi-note"></div></div>
+      </div>
+    </div>
+    <div class="result-notes">【免責事項】本査定は業界相場データをもとにした参考値であり、保証するものではありません。リース品・設備の状態・次テナントの業態により実際の譲渡金は変動します。正確な査定はVELETAの無料個別相談をご利用ください。</div>
+    <div class="cta-section">
+      <h3 class="cta-title">より正確な査定を無料で</h3>
+      <p class="cta-desc">VELETAは名古屋の店舗売却・造作譲渡を専門とする不動産会社です。<br>担当者が直接確認し、最適な募集方法をご提案します。</p>
+      <a href="tel:0529503075" class="cta-btn">無料相談の予約をする</a>
+      <div class="contact-info">
+        <div class="ci-row">📞 <a href="tel:0529503075" class="ci-link">052-950-3075</a><span style="font-size:10px;color:#666">月〜金 9:00〜19:00 / 土 10:00〜17:00 / 日祝休</span></div>
+        <div class="ci-row">✉️ <span class="ci-link" id="em-lnk" style="cursor:pointer">info@veletainc.com</span></div>
+      </div>
+      <div id="reg-badge" style="display:none"><div class="registered-badge">✓ お問い合わせ情報をVELETAが受信しました</div></div>
+    </div>
+    <button class="btn-totop" id="btn-totop">↑ トップに戻る</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  © 2026 株式会社VELETA　|　名古屋市東区東桜1-9-29 オアシス栄ビル4F
+  <br style="margin-top:4px">
+  <a href="https://www.inuki-satei.com/satei.html" style="color:var(--accent);text-decoration:none;font-size:10px;letter-spacing:1px">▶ 飲食店版はこちら</a>
+</footer>
+
+<script data-cfasync="false">
+var WASH=[
+  {id:'w2',lbl:'給湯ボイラー',pts:12},
+  {id:'w3',lbl:'業務用洗濯機・乾燥機',pts:8}
+];
+var TREATMENT=[
+  {id:'t2',lbl:'スタイリングチェア',pts:5},
+  {id:'t3',lbl:'パーマ機器',pts:8},
+  {id:'t4',lbl:'スチーマー・ヘッドスパ機器',pts:7}
+];
+var NAIL=[
+  {id:'n1',lbl:'ネイルテーブル・チェア',pts:5},
+  {id:'n2',lbl:'ジェルランプ・ネイル機器',pts:4},
+  {id:'n3',lbl:'アイラッシュ用ベッド',pts:5}
+];
+var ESTHETIC=[
+  {id:'e1',lbl:'脱毛器',pts:30},
+  {id:'e2',lbl:'フェイシャル機器',pts:10},
+  {id:'e3',lbl:'エステベッド',pts:5}
+];
+var INTERIOR=[
+  {id:'i1',lbl:'内装仕上げ良好',pts:10},
+  {id:'i2',lbl:'照明設備（間接照明等）',pts:6},
+  {id:'i3',lbl:'音響設備',pts:4},
+  {id:'i4',lbl:'業務用エアコン',pts:5},
+  {id:'i5',lbl:'受付カウンター・家具',pts:5}
+];
+
+var KU_TIER={'中区':1.15,'千種区':1.15,'名東区':1.15,'中村区':1.00,'東区':1.00,'昭和区':1.00,'熱田区':1.00,'守山区':1.00,'瑞穂区':1.00,'天白区':0.85,'北区':0.85,'西区':0.85,'港区':0.70,'中川区':0.70,'南区':0.70};
+var YEAR_COEF={u1:1.30,'1to3':1.10,'3to5':1.00,'5to8':0.80,'8plus':0.60};
+var GYOTAI_COEF={hair:1.2,nail:0.9,eyelash:0.85,esthetic:1.1,relax:0.9,depilation:1.3,total:1.15};
+
+function buildCbs(items,gid){
+  var g=document.getElementById(gid);
+  items.forEach(function(item){
+    var lbl=document.createElement('label');
+    lbl.className='cb-item';
+    lbl.innerHTML='<input type="checkbox" id="'+item.id+'"><span class="cb-dot">✓</span><span>'+item.lbl+'</span>';
+    lbl.querySelector('input').addEventListener('change',function(){lbl.classList.toggle('on',this.checked);});
+    g.appendChild(lbl);
+  });
+}
+buildCbs(WASH,'cg-wash');
+buildCbs(TREATMENT,'cg-treatment');
+buildCbs(NAIL,'cg-nail');
+buildCbs(ESTHETIC,'cg-esthetic');
+buildCbs(INTERIOR,'cg-interior');
+
+var el=document.getElementById('em-lnk');
+if(el){el.addEventListener('click',function(){window.location.href='mai'+'lto:'+'info'+'@'+'veletainc.com';});}
+
+function setProg(n){[1,2,3,4].forEach(function(i){var e=document.getElementById('ps'+i);e.classList.remove('active','done');if(i===n)e.classList.add('active');if(i<n)e.classList.add('done');});}
+function showStep(n){[1,2,3,4].forEach(function(i){document.getElementById('s'+i).classList.toggle('on',i===n);});setProg(n);window.scrollTo(0,0);}
+function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+function showErr(eid,msg){var el=document.getElementById(eid);if(el)el.textContent=msg;}
+function clearErr(eid){var el=document.getElementById(eid);if(el)el.textContent='';}
+
+function validateStep1(){
+  clearErr('err1');
+  if(!gv('f-shopname')){showErr('err1','サロン名を入力してください');document.getElementById('f-shopname').focus();return false;}
+  if(!gv('f-name')){showErr('err1','担当者名を入力してください');document.getElementById('f-name').focus();return false;}
+  if(!gv('f-tel')){showErr('err1','電話番号を入力してください');document.getElementById('f-tel').focus();return false;}
+  var em=gv('f-email');
+  if(!em||em.indexOf('@')<0){showErr('err1','有効なメールアドレスを入力してください');document.getElementById('f-email').focus();return false;}
+  return true;
+}
+function validateStep2(){
+  clearErr('err2');
+  if(!gv('f-addr')){showErr('err2','住所を入力してください');document.getElementById('f-addr').focus();return false;}
+  if(!gv('f-tsubo')){showErr('err2','坪数を入力してください');document.getElementById('f-tsubo').focus();return false;}
+  if(!gv('f-gyotai')){showErr('err2','業態を選択してください');return false;}
+  if(!gv('f-rent')){showErr('err2','月額賃料を入力してください');document.getElementById('f-rent').focus();return false;}
+  if(!gv('f-years')){showErr('err2','営業年数を選択してください');return false;}
+  if(document.getElementById('f-hosho-sel').value==='known'&&!gv('f-hosho')){showErr('err2','保証金総額を入力してください');document.getElementById('f-hosho').focus();return false;}
+  if(document.getElementById('f-syakku-sel').value==='known'&&gv('f-syakku')===''){showErr('err2','償却条件を入力してください');document.getElementById('f-syakku').focus();return false;}
+  return true;
+}
+
+document.getElementById('f-hosho-sel').addEventListener('change',function(){document.getElementById('f-hosho').style.display=this.value==='known'?'':'none';});
+document.getElementById('f-syakku-sel').addEventListener('change',function(){var s=this.value==='known';document.getElementById('f-syakku').style.display=s?'':'none';document.getElementById('syakku-hint').style.display=s?'':'none';});
+document.getElementById('btn1').addEventListener('click',function(){if(validateStep1())showStep(2);});
+document.getElementById('btn2').addEventListener('click',function(){if(validateStep2())showStep(3);});
+document.getElementById('btn2b').addEventListener('click',function(){showStep(1);});
+document.getElementById('btn3b').addEventListener('click',function(){showStep(2);});
+document.getElementById('btn3').addEventListener('click',function(){calcAndShow();});
+document.getElementById('btn-totop').addEventListener('click',function(){showStep(1);});
+
+function fmt(n){return Math.round(n/10000)+'万円';}
+function detectTier(addr){var m=addr.match(/名古屋市(\S+区)/);if(m&&KU_TIER[m[1]])return KU_TIER[m[1]];return 0.75;}
+
+function calcAndShow(){
+  var rent=Number(gv('f-rent'));
+  var years=gv('f-years');
+  var addr=gv('f-addr');
+  var gyotai=gv('f-gyotai');
+  var base=rent*3.5;
+  var areaTier=detectTier(addr);
+  var yearCoef=YEAR_COEF[years]||1.0;
+  var gyotaiCoef=GYOTAI_COEF[gyotai]||1.0;
+  var equip=0;
+  var allItems=WASH.concat(TREATMENT).concat(NAIL).concat(ESTHETIC).concat(INTERIOR);
+  allItems.forEach(function(item){if(document.getElementById(item.id)&&document.getElementById(item.id).checked)equip+=item.pts*10000;});
+  var shampooNum=Number(document.getElementById('f-shampoo')?.value)||0;
+  var setmenNum=Number(document.getElementById('f-setmen')?.value)||0;
+  equip+=shampooNum*150000;
+  equip+=setmenNum*60000;
+  var center=Math.round((base*areaTier*yearCoef*gyotaiCoef+equip)/10000)*10000;
+  var low=Math.round(center*0.7/10000)*10000;
+  var high=Math.round(center*1.3/10000)*10000;
+  var hoshoSel=document.getElementById('f-hosho-sel').value;
+  var syakkuSel=document.getElementById('f-syakku-sel').value;
+  var hoshoReturn=null,temochi=null;
+  if(hoshoSel==='known'&&syakkuSel==='known'){
+    var hosho=Number(gv('f-hosho'))||0;
+    var syakku=Number(gv('f-syakku'))||0;
+    hoshoReturn=Math.max(0,hosho-rent*syakku);
+    temochi=Math.round((low+hoshoReturn)/10000)*10000;
+  }else if(hoshoSel==='known'){
+    hoshoReturn=Number(gv('f-hosho'))||0;
+  }
+  document.getElementById('r-center').textContent=fmt(center);
+  document.getElementById('r-range').textContent='概算レンジ：'+fmt(low)+' 〜 '+fmt(high);
+  document.getElementById('r-low').textContent=fmt(low);
+  document.getElementById('r-high').textContent=fmt(high);
+  if(hoshoReturn!==null){
+    document.getElementById('r-hosho').textContent=fmt(hoshoReturn);
+    document.getElementById('r-hosho-note').textContent=syakkuSel==='unknown'?'（償却条件不明のため参考値）':'';
+  }else{
+    document.getElementById('r-hosho').textContent='—';
+    document.getElementById('r-hosho-note').textContent='保証金・償却条件を入力すると算出できます';
+  }
+  if(temochi!==null){
+    document.getElementById('r-temochi').textContent=fmt(temochi)+'〜';
+    document.getElementById('r-temochi-note').textContent='（造作下限 + 保証金回収）';
+  }else{
+    document.getElementById('r-temochi').textContent='—';
+    document.getElementById('r-temochi-note').textContent='保証金・償却条件を入力すると算出できます';
+  }
+  showStep(4);
+  registerKintone(center,low,high,hoshoReturn,temochi);
+}
+
+function registerKintone(center,low,high,hoshoReturn,temochi){
+  var allItems=WASH.concat(TREATMENT).concat(NAIL).concat(ESTHETIC).concat(INTERIOR);
+  var checked=allItems.filter(function(i){return document.getElementById(i.id)&&document.getElementById(i.id).checked;}).map(function(i){return i.lbl;});
+  var payload={
+    shopname:gv('f-shopname'),name:gv('f-name'),tel:gv('f-tel'),email:gv('f-email'),
+    addr:gv('f-addr'),tsubo:gv('f-tsubo'),gyotai:gv('f-gyotai'),rent:gv('f-rent'),
+    hosho:document.getElementById('f-hosho-sel').value==='known'?gv('f-hosho'):'わからない',
+    syakku:document.getElementById('f-syakku-sel').value==='known'?gv('f-syakku')+'ヶ月':'わからない',
+    years:gv('f-years'),equipment:checked.join('、'),
+    shampoo:gv('f-shampoo'),setmen:gv('f-setmen'),
+    satei_center:center,satei_low:low,satei_high:high,
+    hosho_return:hoshoReturn!=null?hoshoReturn:'',
+    temochi:temochi!=null?temochi:'',
+    inquiry_date:new Date().toLocaleDateString('ja-JP')
+  };
+  fetch('/api/satei',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){if(r.ok)document.getElementById('reg-badge').style.display='block';})
+    .catch(function(e){console.warn('kintone error:',e);});
+}
+</script>
+</body>
+</html>
