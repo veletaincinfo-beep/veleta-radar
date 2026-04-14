@@ -450,8 +450,14 @@ function registerKintone(center,low,high,hoshoReturn,temochi){
     addr:gv('f-addr'),tsubo:gv('f-tsubo'),gyotai:gv('f-gyotai'),rent:gv('f-rent'),
     hosho:document.getElementById('f-hosho-sel').value==='known'?gv('f-hosho'):'わからない',
     syakku:document.getElementById('f-syakku-sel').value==='known'?gv('f-syakku')+'ヶ月':'わからない',
-    years:gv('f-years'),equipment:checked.join('、'),
-    shampoo:gv('f-shampoo'),setmen:gv('f-setmen'),
+    years:gv('f-years'),equipment:(function(){
+      var parts=checked.slice();
+      var s=Number(document.getElementById('f-shampoo')?.value)||0;
+      var m=Number(document.getElementById('f-setmen')?.value)||0;
+      if(s>0)parts.unshift('シャンプーボウル×'+s+'台');
+      if(m>0)parts.unshift('セット面×'+m+'面');
+      return parts.join('、');
+    })(),
     satei_center:center,satei_low:low,satei_high:high,
     hosho_return:hoshoReturn!=null?hoshoReturn:'',
     temochi:temochi!=null?temochi:'',
