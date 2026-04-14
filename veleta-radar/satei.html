@@ -16,21 +16,12 @@
 <meta name="google-site-verification" content="IhC9NrGPq7AXcxrWHRAPmAi-R4VJZ2ofjtwf13s8BwY">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink:#1a1610; --paper:#faf8f3; --warm:#f0ebe0;
-  --gold:#9a7a3a; --gold2:#c4a35a; --rust:#8b3a2a; --sage:#4a6741;
-  --txt:#2c2820; --txt2:#6b6258; --txt3:#a09890;
-  --bdr:#d8d0c0; --bdr2:#e8e0d0;
-  --serif:'Shippori Mincho',serif; --sans:'Noto Sans JP',sans-serif;
-  --r:4px;
-}
+:root{--ink:#1a1610;--paper:#faf8f3;--warm:#f0ebe0;--gold:#9a7a3a;--gold2:#c4a35a;--rust:#8b3a2a;--sage:#4a6741;--txt:#2c2820;--txt2:#6b6258;--txt3:#a09890;--bdr:#d8d0c0;--bdr2:#e8e0d0;--serif:'Shippori Mincho',serif;--sans:'Noto Sans JP',sans-serif;--r:4px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:14px;line-height:1.7;min-height:100vh}
-
 .site-header{background:var(--ink);padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:var(--serif);font-size:20px;color:var(--gold2);letter-spacing:3px}
 .logo-sub{font-size:10px;color:#888;letter-spacing:2px;margin-top:2px}
-
 .hero{background:#fafaf8;border-bottom:3px solid #1a1610;padding:56px 32px;text-align:center}
 .hero-num{font-size:80px;font-weight:900;color:#1a1610;line-height:1;letter-spacing:-5px;font-family:var(--serif);margin-bottom:4px}
 .hero-num span{font-size:32px;font-weight:400;letter-spacing:0}
@@ -38,7 +29,6 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 .hero-desc{font-size:13px;color:#6b6258;margin-bottom:28px;line-height:1.9;max-width:480px;margin-left:auto;margin-right:auto}
 .hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .hbadge{font-size:11px;color:#6b6258;border:1px solid #d8d0c0;border-radius:3px;padding:3px 12px}
-
 .prog-wrap{background:var(--warm);border-bottom:1px solid var(--bdr)}
 .prog-inner{max-width:720px;margin:0 auto;display:flex;align-items:stretch}
 .pstep{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 8px;position:relative}
@@ -49,14 +39,10 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 .pstep.active .plbl{color:var(--gold);font-weight:500}
 .pstep.done .pnum{background:var(--sage);border-color:var(--sage);color:#fff}
 .pstep.done .plbl{color:var(--sage)}
-
 .form-outer{max-width:720px;margin:0 auto;padding:48px 32px 80px}
-.screen{display:none}
-.screen.on{display:block}
-
+.screen{display:none}.screen.on{display:block}
 .step-title{font-family:var(--serif);font-size:22px;color:var(--ink);margin-bottom:6px;letter-spacing:1px}
 .step-desc{font-size:13px;color:var(--txt2);margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--bdr2)}
-
 .fl{margin-bottom:24px}
 .fl-lbl{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--txt2);letter-spacing:.5px;margin-bottom:7px}
 .req{font-size:10px;background:var(--rust);color:#fff;padding:1px 5px;border-radius:2px;letter-spacing:0}
@@ -67,7 +53,6 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 .fl-err{font-size:12px;color:var(--rust);margin-top:6px;font-weight:500}
 .fl-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:560px){.fl-grid{grid-template-columns:1fr}}
-
 .cb-section{margin-bottom:28px;padding:20px;background:#fff;border:1px solid var(--bdr2);border-radius:var(--r)}
 .cb-section-title{font-size:12px;font-weight:500;color:var(--txt2);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--bdr2)}
 .cb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -77,12 +62,10 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 .cb-dot{width:16px;height:16px;border:1px solid var(--bdr);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .15s}
 .cb-item.on{border-color:var(--gold);background:rgba(154,122,58,.05);color:var(--gold)}
 .cb-item.on .cb-dot{background:var(--gold);border-color:var(--gold);color:#fff}
-
 .btn-row{display:flex;gap:12px;margin-top:36px}
 .btn-next{flex:1;padding:18px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:15px;font-weight:500;letter-spacing:2px;cursor:pointer;transition:all .2s;-webkit-appearance:none}
 .btn-next:active{opacity:.8}
 .btn-back{padding:18px 24px;background:transparent;color:var(--txt2);border:1px solid var(--bdr);border-radius:var(--r);font-family:var(--sans);font-size:14px;cursor:pointer;-webkit-appearance:none}
-
 .result-card{background:var(--ink);border-radius:8px;padding:36px;margin-bottom:24px;position:relative;overflow:hidden}
 .result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold2)}
 .result-eyebrow{font-size:10px;letter-spacing:3px;color:var(--gold2);text-transform:uppercase;margin-bottom:8px}
@@ -93,49 +76,34 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 .rc-lbl{font-size:10px;color:#888;letter-spacing:1px;margin-bottom:4px}
 .rc-val{font-family:var(--serif);font-size:20px;color:#fff}
 .rc-note{font-size:11px;color:#666;margin-top:3px}
-
 .result-notes{background:rgba(154,122,58,.08);border:1px solid rgba(154,122,58,.2);border-radius:var(--r);padding:16px;font-size:12px;color:#aaa;line-height:1.8;margin-bottom:24px}
 .result-notes strong{color:var(--gold2)}
-
 .cta-section{background:#fff;border:1px solid var(--bdr);border-radius:8px;padding:28px;text-align:center}
 .cta-title{font-family:var(--serif);font-size:18px;color:var(--ink);margin-bottom:8px}
 .cta-desc{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.7}
 .cta-btn{display:inline-block;padding:16px 36px;background:var(--gold);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:1px;cursor:pointer;text-decoration:none;-webkit-appearance:none}
-
 .contact-info{margin:20px 0 16px;display:flex;flex-direction:column;gap:10px;padding:16px 20px;background:var(--warm);border-radius:var(--r);border:1px solid var(--bdr2)}
 .ci-row{display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
 .ci-link{color:var(--gold);text-decoration:none;font-weight:500}
 .ci-note{font-size:11px;color:var(--txt3)}
-
 .registered-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sage);background:rgba(74,103,65,.08);border:1px solid rgba(74,103,65,.2);border-radius:20px;padding:5px 14px;margin-top:16px}
-
 .btn-totop{margin-top:32px;display:block;width:100%;padding:14px;background:transparent;color:var(--txt3);border:1px solid var(--bdr);border-radius:20px;font-family:var(--sans);font-size:13px;cursor:pointer;letter-spacing:1px;-webkit-appearance:none}
-
 .site-footer{background:var(--ink);padding:24px 32px;text-align:center;font-size:11px;color:#555;letter-spacing:1px}
 </style>
 </head>
 <body>
-
 <header class="site-header">
-  <div>
-    <div class="logo">VELETA</div>
-    <div class="logo-sub">REAL ESTATE × INTERIOR</div>
-  </div>
+  <div><div class="logo">VELETA</div><div class="logo-sub">REAL ESTATE × INTERIOR</div></div>
   <div style="font-size:11px;color:#555;letter-spacing:1px">造作譲渡 AI査定</div>
 </header>
-
 <div class="hero">
   <div class="hero-num">1<span>秒</span></div>
   <h1>造作譲渡金 AI査定</h1>
   <p class="hero-desc">住所・賃料を入力するだけ。<br>300件超の成約データをもとに、AIが造作価値を即時算出します。</p>
   <div class="hero-badges">
-    <span class="hbadge">入力3分</span>
-    <span class="hbadge">完全無料</span>
-    <span class="hbadge">秘密厳守</span>
-    <span class="hbadge">300件超の実績データ</span>
+    <span class="hbadge">入力3分</span><span class="hbadge">完全無料</span><span class="hbadge">秘密厳守</span><span class="hbadge">300件超の実績データ</span>
   </div>
 </div>
-
 <nav class="prog-wrap">
   <div class="prog-inner">
     <div class="pstep active" id="ps1"><div class="pnum">1</div><div class="plbl">連絡先</div></div>
@@ -144,10 +112,7 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
     <div class="pstep" id="ps4"><div class="pnum">4</div><div class="plbl">査定結果</div></div>
   </div>
 </nav>
-
 <div class="form-outer">
-
-  <!-- STEP 1 -->
   <div id="s1" class="screen on">
     <h2 class="step-title">ご連絡先</h2>
     <p class="step-desc">査定後、VELETAよりご連絡させていただく場合があります。</p>
@@ -174,8 +139,6 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
       <button class="btn-next" id="btn1">次へ — 物件情報を入力 →</button>
     </div>
   </div>
-
-  <!-- STEP 2 -->
   <div id="s2" class="screen">
     <h2 class="step-title">物件情報</h2>
     <p class="step-desc">査定の基礎となる物件情報をご入力ください。</p>
@@ -193,24 +156,13 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
         <select id="f-gyotai" class="fl-sel">
           <option value="">選択してください</option>
           <optgroup label="和食・日本料理系">
-            <option>居酒屋・ダイニングバー</option>
-            <option>焼鳥・串焼き</option>
-            <option>焼肉・ホルモン</option>
-            <option>すし・海鮮</option>
-            <option>和食・定食</option>
+            <option>居酒屋・ダイニングバー</option><option>焼鳥・串焼き</option><option>焼肉・ホルモン</option><option>すし・海鮮</option><option>和食・定食</option>
           </optgroup>
           <optgroup label="麺類系">
-            <option>ラーメン・つけ麺</option>
-            <option>うどん・そば</option>
-            <option>パスタ・イタリアン</option>
+            <option>ラーメン・つけ麺</option><option>うどん・そば</option><option>パスタ・イタリアン</option>
           </optgroup>
           <optgroup label="洋食・その他">
-            <option>カフェ・喫茶</option>
-            <option>ハンバーガー・サンドイッチ</option>
-            <option>カレー</option>
-            <option>中華・餃子</option>
-            <option>タイ・アジア料理</option>
-            <option>その他</option>
+            <option>カフェ・喫茶</option><option>ハンバーガー・サンドイッチ</option><option>カレー</option><option>中華・餃子</option><option>タイ・アジア料理</option><option>その他</option>
           </optgroup>
         </select>
       </div>
@@ -223,18 +175,12 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
     <div class="fl-grid">
       <div class="fl">
         <label class="fl-lbl" for="f-hosho-sel">保証金総額 <span class="req">必須</span></label>
-        <select id="f-hosho-sel" class="fl-sel">
-          <option value="known">金額を入力する</option>
-          <option value="unknown">わからない</option>
-        </select>
+        <select id="f-hosho-sel" class="fl-sel"><option value="known">金額を入力する</option><option value="unknown">わからない</option></select>
         <input id="f-hosho" class="fl-inp" type="number" placeholder="例：1800000（円）" min="0" inputmode="numeric" style="margin-top:8px">
       </div>
       <div class="fl">
         <label class="fl-lbl" for="f-syakku-sel">保証金償却条件 <span class="req">必須</span></label>
-        <select id="f-syakku-sel" class="fl-sel">
-          <option value="known">条件を入力する</option>
-          <option value="unknown">わからない</option>
-        </select>
+        <select id="f-syakku-sel" class="fl-sel"><option value="known">条件を入力する</option><option value="unknown">わからない</option></select>
         <input id="f-syakku" class="fl-inp" type="number" placeholder="償却ヶ月数（例：6）" min="0" max="24" inputmode="numeric" style="margin-top:8px">
         <p class="fl-hint" id="syakku-hint">賃料の何ヶ月分が償却されるか数字で入力。例：6</p>
       </div>
@@ -244,11 +190,7 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
       <label class="fl-lbl" for="f-years">営業年数 <span class="req">必須</span></label>
       <select id="f-years" class="fl-sel">
         <option value="">選択してください</option>
-        <option value="u1">1年未満</option>
-        <option value="1to3">1〜3年</option>
-        <option value="3to5">3〜5年</option>
-        <option value="5to8">5〜8年</option>
-        <option value="8plus">8年以上</option>
+        <option value="u1">1年未満</option><option value="1to3">1〜3年</option><option value="3to5">3〜5年</option><option value="5to8">5〜8年</option><option value="8plus">8年以上</option>
       </select>
     </div>
     <div id="err2" class="fl-err"></div>
@@ -257,30 +199,17 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
       <button class="btn-next" id="btn2">次へ — 設備・内装を入力 →</button>
     </div>
   </div>
-
-  <!-- STEP 3 -->
   <div id="s3" class="screen">
     <h2 class="step-title">設備・内装</h2>
     <p class="step-desc">該当する設備・内装にチェックを入れてください。査定精度が上がります。</p>
-    <div class="cb-section">
-      <div class="cb-section-title">厨房機器</div>
-      <div class="cb-grid" id="cg-kitchen"></div>
-    </div>
-    <div class="cb-section">
-      <div class="cb-section-title">内装</div>
-      <div class="cb-grid" id="cg-interior"></div>
-    </div>
-    <div class="cb-section">
-      <div class="cb-section-title">その他設備</div>
-      <div class="cb-grid" id="cg-other"></div>
-    </div>
+    <div class="cb-section"><div class="cb-section-title">厨房機器</div><div class="cb-grid" id="cg-kitchen"></div></div>
+    <div class="cb-section"><div class="cb-section-title">内装</div><div class="cb-grid" id="cg-interior"></div></div>
+    <div class="cb-section"><div class="cb-section-title">その他設備</div><div class="cb-grid" id="cg-other"></div></div>
     <div class="btn-row">
       <button class="btn-back" id="btn3b">← 戻る</button>
       <button class="btn-next" id="btn3">査定結果を見る →</button>
     </div>
   </div>
-
-  <!-- STEP 4 -->
   <div id="s4" class="screen">
     <h2 class="step-title">査定結果</h2>
     <p class="step-desc">入力内容をもとに算出した概算です。詳細な査定はVELETAにご相談ください。</p>
@@ -295,30 +224,22 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
         <div class="result-cell"><div class="rc-lbl">手残り概算</div><div class="rc-val" id="r-temochi">—</div><div class="rc-note" id="r-temochi-note"></div></div>
       </div>
     </div>
-    <div class="result-notes">
-      <strong>【免責事項】</strong><br>
-      本査定は株式会社VELETAの成約データをもとにした参考値であり、保証するものではありません。リース品・設備の状態・次テナントの業態により実際の譲渡金は変動します。正確な査定はVELETAの無料個別相談をご利用ください。
-    </div>
+    <div class="result-notes"><strong>【免責事項】</strong><br>本査定は株式会社VELETAの成約データをもとにした参考値であり、保証するものではありません。リース品・設備の状態・次テナントの業態により実際の譲渡金は変動します。正確な査定はVELETAの無料個別相談をご利用ください。</div>
     <div class="cta-section">
       <h3 class="cta-title">より正確な査定を無料で</h3>
       <p class="cta-desc">VELETAは名古屋最大級の造作譲渡実績を持つ不動産会社です。<br>担当者が物件を直接確認し、より正確な査定と最適な次のテナントをご提案します。</p>
       <a href="tel:0529503075" class="cta-btn">無料相談の予約をする</a>
       <div class="contact-info">
         <div class="ci-row"><span>📞</span><a href="tel:0529503075" class="ci-link">052-950-3075</a><span class="ci-note">月〜金 9:00〜19:00 / 土 10:00〜17:00 / 日祝休</span></div>
-        <div class="ci-row"><span>✉️</span><a href="/cdn-cgi/l/email-protection#137a7d757c5365767f7667727a7d703d707c7e" class="ci-link"><span class="__cf_email__" data-cfemail="5f363139301f293a333a2b3e36313c713c3032">[email&#160;protected]</span></a></div>
+        <div class="ci-row"><span>✉️</span><span class="ci-link" id="em-lnk" style="cursor:pointer">info(at)veletainc.com</span></div>
       </div>
       <div id="reg-badge" style="display:none"><div class="registered-badge">✓ お問い合わせ情報をVELETAが受信しました</div></div>
     </div>
     <button class="btn-totop" id="btn-totop">↑ トップに戻る</button>
   </div>
-
 </div>
-
-<footer class="site-footer">
-  © 2026 株式会社VELETA　|　名古屋市東区東桜1-9-29 オアシス栄ビル4F
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<footer class="site-footer">© 2026 株式会社VELETA　|　名古屋市東区東桜1-9-29 オアシス栄ビル4F</footer>
+<script data-cfasync="false">
 var KITCHEN=[
   {id:'k1',lbl:'縦型冷蔵庫・冷凍庫',pts:5},{id:'k2',lbl:'コールドテーブル',pts:5},
   {id:'k3',lbl:'製氷機',pts:5},{id:'k4',lbl:'冷蔵ショーケース',pts:5},
@@ -327,16 +248,8 @@ var KITCHEN=[
   {id:'k9',lbl:'ゆで麺機',pts:10},{id:'k10',lbl:'オーブン',pts:5},
   {id:'k11',lbl:'シンク・作業台・板金類',pts:4},{id:'k12',lbl:'ダクト・換気設備',pts:20}
 ];
-var INTERIOR=[
-  {id:'i1',lbl:'テーブル・椅子セット',pts:5},
-  {id:'i2',lbl:'内装仕上げ良好',pts:10},
-  {id:'i3',lbl:'造作カウンター',pts:8}
-];
-var OTHER=[
-  {id:'o1',lbl:'POSレジ',pts:3},
-  {id:'o2',lbl:'業務用エアコン',pts:5},
-  {id:'o3',lbl:'音響・照明設備',pts:5}
-];
+var INTERIOR=[{id:'i1',lbl:'テーブル・椅子セット',pts:5},{id:'i2',lbl:'内装仕上げ良好',pts:10},{id:'i3',lbl:'造作カウンター',pts:8}];
+var OTHER=[{id:'o1',lbl:'POSレジ',pts:3},{id:'o2',lbl:'業務用エアコン',pts:5},{id:'o3',lbl:'音響・照明設備',pts:5}];
 var KU_TIER={'中区':1.15,'千種区':1.15,'名東区':1.15,'中村区':1.00,'東区':1.00,'昭和区':1.00,'熱田区':1.00,'守山区':1.00,'瑞穂区':1.00,'天白区':0.85,'北区':0.85,'西区':0.85,'港区':0.70,'中川区':0.70,'南区':0.70};
 var YEAR_COEF={u1:1.30,'1to3':1.10,'3to5':1.00,'5to8':0.80,'8plus':0.60};
 
@@ -346,9 +259,7 @@ function buildCbs(items,gid){
     var lbl=document.createElement('label');
     lbl.className='cb-item';
     lbl.innerHTML='<input type="checkbox" id="'+item.id+'"><span class="cb-dot">✓</span><span>'+item.lbl+'</span>';
-    lbl.querySelector('input').addEventListener('change',function(){
-      lbl.classList.toggle('on',this.checked);
-    });
+    lbl.querySelector('input').addEventListener('change',function(){lbl.classList.toggle('on',this.checked);});
     g.appendChild(lbl);
   });
 }
@@ -356,23 +267,12 @@ buildCbs(KITCHEN,'cg-kitchen');
 buildCbs(INTERIOR,'cg-interior');
 buildCbs(OTHER,'cg-other');
 
-function setProg(n){
-  [1,2,3,4].forEach(function(i){
-    var el=document.getElementById('ps'+i);
-    el.classList.remove('active','done');
-    if(i===n)el.classList.add('active');
-    if(i<n)el.classList.add('done');
-  });
-}
+// メールリンク（Cloudflareのemail保護を回避）
+var el=document.getElementById('em-lnk');
+if(el){el.addEventListener('click',function(){window.location.href='mai'+'lto:'+'info'+'@'+'veletainc.com';});}
 
-function showStep(n){
-  [1,2,3,4].forEach(function(i){
-    document.getElementById('s'+i).classList.toggle('on',i===n);
-  });
-  setProg(n);
-  window.scrollTo(0,0);
-}
-
+function setProg(n){[1,2,3,4].forEach(function(i){var e=document.getElementById('ps'+i);e.classList.remove('active','done');if(i===n)e.classList.add('active');if(i<n)e.classList.add('done');});}
+function showStep(n){[1,2,3,4].forEach(function(i){document.getElementById('s'+i).classList.toggle('on',i===n);});setProg(n);window.scrollTo(0,0);}
 function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
 function showErr(eid,msg){var el=document.getElementById(eid);if(el)el.textContent=msg;}
 function clearErr(eid){var el=document.getElementById(eid);if(el)el.textContent='';}
@@ -386,7 +286,6 @@ function validateStep1(){
   if(!em||em.indexOf('@')<0){showErr('err1','有効なメールアドレスを入力してください');document.getElementById('f-email').focus();return false;}
   return true;
 }
-
 function validateStep2(){
   clearErr('err2');
   if(!gv('f-addr')){showErr('err2','店舗住所を入力してください');document.getElementById('f-addr').focus();return false;}
@@ -399,33 +298,17 @@ function validateStep2(){
   return true;
 }
 
-document.getElementById('f-hosho-sel').addEventListener('change',function(){
-  document.getElementById('f-hosho').style.display=this.value==='known'?'':'none';
-});
-document.getElementById('f-syakku-sel').addEventListener('change',function(){
-  var show=this.value==='known';
-  document.getElementById('f-syakku').style.display=show?'':'none';
-  document.getElementById('syakku-hint').style.display=show?'':'none';
-});
-
-document.getElementById('btn1').addEventListener('click',function(){
-  if(validateStep1())showStep(2);
-});
-document.getElementById('btn2').addEventListener('click',function(){
-  if(validateStep2())showStep(3);
-});
+document.getElementById('f-hosho-sel').addEventListener('change',function(){document.getElementById('f-hosho').style.display=this.value==='known'?'':'none';});
+document.getElementById('f-syakku-sel').addEventListener('change',function(){var s=this.value==='known';document.getElementById('f-syakku').style.display=s?'':'none';document.getElementById('syakku-hint').style.display=s?'':'none';});
+document.getElementById('btn1').addEventListener('click',function(){if(validateStep1())showStep(2);});
+document.getElementById('btn2').addEventListener('click',function(){if(validateStep2())showStep(3);});
 document.getElementById('btn2b').addEventListener('click',function(){showStep(1);});
 document.getElementById('btn3b').addEventListener('click',function(){showStep(2);});
 document.getElementById('btn3').addEventListener('click',function(){calcAndShow();});
 document.getElementById('btn-totop').addEventListener('click',function(){showStep(1);});
 
 function fmt(n){return Math.round(n/10000)+'万円';}
-
-function detectTier(addr){
-  var m=addr.match(/名古屋市(\S+区)/);
-  if(m&&KU_TIER[m[1]])return KU_TIER[m[1]];
-  return 0.75;
-}
+function detectTier(addr){var m=addr.match(/名古屋市(\S+区)/);if(m&&KU_TIER[m[1]])return KU_TIER[m[1]];return 0.75;}
 
 function calcAndShow(){
   var rent=Number(gv('f-rent'));
@@ -436,13 +319,10 @@ function calcAndShow(){
   var yearCoef=YEAR_COEF[years]||1.0;
   var equip=0;
   var allItems=KITCHEN.concat(INTERIOR).concat(OTHER);
-  allItems.forEach(function(item){
-    if(document.getElementById(item.id)&&document.getElementById(item.id).checked)equip+=item.pts*10000;
-  });
+  allItems.forEach(function(item){if(document.getElementById(item.id)&&document.getElementById(item.id).checked)equip+=item.pts*10000;});
   var center=Math.round((base*areaTier*yearCoef+equip)/10000)*10000;
   var low=Math.round(center*0.7/10000)*10000;
   var high=Math.round(center*1.3/10000)*10000;
-
   var hoshoSel=document.getElementById('f-hosho-sel').value;
   var syakkuSel=document.getElementById('f-syakku-sel').value;
   var hoshoReturn=null,temochi=null;
@@ -454,7 +334,6 @@ function calcAndShow(){
   }else if(hoshoSel==='known'){
     hoshoReturn=Number(gv('f-hosho'))||0;
   }
-
   document.getElementById('r-center').textContent=fmt(center);
   document.getElementById('r-range').textContent='概算レンジ：'+fmt(low)+' 〜 '+fmt(high);
   document.getElementById('r-low').textContent=fmt(low);
@@ -473,7 +352,6 @@ function calcAndShow(){
     document.getElementById('r-temochi').textContent='—';
     document.getElementById('r-temochi-note').textContent='保証金・償却条件を入力すると算出できます';
   }
-
   showStep(4);
   registerKintone(center,low,high,hoshoReturn,temochi);
 }
@@ -488,7 +366,14 @@ function registerKintone(center,low,high,hoshoReturn,temochi){
     syakku:document.getElementById('f-syakku-sel').value==='known'?gv('f-syakku')+'ヶ月':'わからない',
     years:gv('f-years'),equipment:checked.join('、'),
     satei_center:center,satei_low:low,satei_high:high,
-    hosho_return:hoshoReturn!=null?hoshoReturn:'',temochi:temochi!=null?temochi:'',
+    hosho_return:hoshoReturn!=null?hoshoReturn:'',
+    temochi:temochi!=null?temochi:'',
     inquiry_date:new Date().toLocaleDateString('ja-JP')
   };
-  fetch('/api/satei',{method:'POST',headers:{'Content-Type'
+  fetch('/api/satei',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){if(r.ok)document.getElementById('reg-badge').style.display='block';})
+    .catch(function(e){console.warn('kintone error:',e);});
+}
+</script>
+</body>
+</html>
