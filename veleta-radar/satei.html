@@ -242,16 +242,16 @@ body{background:var(--paper);color:var(--txt);font-family:var(--sans);font-size:
 <footer class="site-footer">© 2026 株式会社VELETA　|　名古屋市東区東桜1-9-29 オアシス栄ビル4F</footer>
 <script data-cfasync="false">
 var KITCHEN=[
-  {id:'k1',lbl:'縦型冷蔵庫・冷凍庫',pts:5},{id:'k2',lbl:'コールドテーブル',pts:5},
+  {id:'k1',lbl:'縦型冷蔵庫・冷凍庫',pts:15},{id:'k2',lbl:'コールドテーブル',pts:15},
   {id:'k3',lbl:'製氷機',pts:5},{id:'k4',lbl:'冷蔵ショーケース',pts:5},
-  {id:'k5',lbl:'冷凍ストッカー',pts:4},{id:'k6',lbl:'食器洗浄機',pts:8},
-  {id:'k7',lbl:'フライヤー',pts:8},{id:'k8',lbl:'炊飯器・保温ジャー',pts:3},
+  {id:'k5',lbl:'冷凍ストッカー',pts:4},{id:'k6',lbl:'食器洗浄機',pts:15},
+  {id:'k7',lbl:'フライヤー',pts:15},{id:'k8',lbl:'炊飯器・保温ジャー',pts:3},
   {id:'k9',lbl:'ゆで麺機',pts:10},{id:'k10',lbl:'オーブン',pts:5},
-  {id:'k11',lbl:'シンク・作業台・板金類',pts:4},{id:'k12',lbl:'ダクト・換気設備',pts:20}
+  {id:'k11',lbl:'シンク・作業台・板金類',pts:4},{id:'k12',lbl:'ダクト・換気設備',pts:25}
 ];
-var INTERIOR=[{id:'i1',lbl:'テーブル・椅子セット',pts:5},{id:'i2',lbl:'内装仕上げ良好',pts:10},{id:'i3',lbl:'造作カウンター',pts:8}];
-var OTHER=[{id:'o1',lbl:'POSレジ',pts:3},{id:'o2',lbl:'業務用エアコン',pts:5},{id:'o3',lbl:'音響・照明設備',pts:5}];
-var KU_TIER={'中区':1.15,'千種区':1.15,'名東区':1.15,'中村区':1.00,'東区':1.00,'昭和区':1.00,'熱田区':1.00,'守山区':1.00,'瑞穂区':1.00,'天白区':0.85,'北区':0.85,'西区':0.85,'港区':0.70,'中川区':0.70,'南区':0.70};
+var INTERIOR=[{id:'i1',lbl:'テーブル・椅子セット',pts:5},{id:'i2',lbl:'内装仕上げ良好',pts:20},{id:'i3',lbl:'造作カウンター',pts:10}];
+var OTHER=[{id:'o1',lbl:'POSレジ',pts:3},{id:'o2',lbl:'業務用エアコン',pts:15},{id:'o3',lbl:'音響・照明設備',pts:5}];
+var KU_TIER={'中区':2.00,'中村区':2.00,'千種区':2.00,'東区':2.00,'名東区':1.60,'昭和区':1.60,'瑞穂区':1.60,'熱田区':1.40,'天白区':1.40,'北区':1.40,'西区':1.40,'港区':1.00,'中川区':1.00,'南区':1.00,'守山区':1.00};
 var YEAR_COEF={u1:1.30,'1to3':1.10,'3to5':1.00,'5to8':0.80,'8plus':0.60};
 
 function buildCbs(items,gid){
@@ -315,7 +315,7 @@ function calcAndShow(){
   var rent=Number(gv('f-rent'));
   var years=gv('f-years');
   var addr=gv('f-addr');
-  var base=rent*4;
+  var base=rent*5;
   var areaTier=detectTier(addr);
   var yearCoef=YEAR_COEF[years]||1.0;
   var equip=0;
